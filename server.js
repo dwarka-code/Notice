@@ -45,17 +45,38 @@ app.post('/register',function(req, res){
     };
 
 
-   console.log("DATA: "+post);
+   //console.log("DATA: "+post);
 
    con.query("INSERT INTO user SET ?",post,function(err,result){
 
-       if(err) throw err
+       if(err)
+           throw err
        else
            console.log(result);
    });
    res.redirect('/');
+});
+
+app.get('/login',function(req, res){
+
+   res.render('pages/login');
+});
+
+app.post('/login',function(req,res){
+
+    var em = req.body.email;
+    var pass = req.body.password;
 
 
+   con.query("SELECT * FROM user WHERE email=? AND password=?",[em,pass],function(err,result){
+
+       if(err)
+           throw err;
+       else{
+           console.log(result);
+           res.redirect('/');
+       }
+   })
 });
 
 
