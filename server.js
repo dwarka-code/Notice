@@ -42,7 +42,7 @@ app.post('/register',function(req, res){
     var email = req.body.email;
     var password = req.body.password;
 
-    con.query("INSERT INTO user SET name = ?, email = ?, password = ?",[name,email,password,email],function(err, result){
+    con.query("INSERT INTO user SET name = ?, email = ?, password = ?",[name,email,password],function(err, result){
 
        if(err)
            res.send("User already exist");
@@ -74,10 +74,7 @@ app.post('/login',function(req,res){
                 if(results[0].password == password){
                     res.cookie("emaill",results[0].email);
                     res.cookie("passwordd",results[0].password);
-                    res.send({
-                        "code":200,
-                        "success":"login sucessfull"
-                    });
+                    res.redirect('/notice');
                 }
                 else{
                     res.send({
@@ -96,7 +93,43 @@ app.post('/login',function(req,res){
     });
 });
 
+app.get('/notice',function(req,res){
 
+    con.query('SELECT * FROM notice',function(err, result){
+
+        if(err)
+            throw err;
+        else {
+
+            res.render('pages/notice', {items: result });
+            console.log(result);
+        }
+    });
+
+});
+
+
+
+app.get('/notice/add_notice',function(req,res){
+
+    res.render('pages/add_notice');
+});
+
+app.post('/notice/add_notice', function(req, res){
+
+    var title = req.body.title;
+    var description = req.body.description;
+
+    con.query("INSERT INTO notice SET title = ?, description = ?",[title,description],function(err, result){
+
+        if(err)
+            throw err;
+        else{
+            res.redirect('/notice');
+        }
+    });
+
+});
 
 
 
@@ -104,4 +137,4 @@ app.post('/login',function(req,res){
 var server = app.listen(3000, function(){
 
     console.log("Listening on port 3000");
-})
+});

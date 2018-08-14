@@ -1,0 +1,36 @@
+<div>
+    <a href="/notice/add_notice">Add new notice</a>
+</div>
+
+<br>
+    <div>
+        <% if (items.length > 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 1%;text-align: center">ID</th>
+                    <th style="width: 49%;text-align: center">Title</th>
+                    <th style="width: 20%;text-align: center">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% items.forEach(function(item, index) { %>
+                    <tr>
+                        <td style="width: 1%;text-align: center"><%= index + 1 %></td>
+                        <td style="width: 49%;text-align: center"><%= item.title %></td>
+                        <td style="width: 20%;text-align: center"><%= item.description %></td>
+                        <td solspan="2" style="width: 20%;text-align: center">
+                            <a href="/notice/edit/<%= item.id %>">Edit</a>
+                            <a href="/notice/delete/<%= item.id %>">Delete</a>
+                        </td>
+                    </tr>
+                <%}); %>
+            </tbody>
+        </table>
+        <% }else{ %>
+        <p>
+            There are no records avaible
+        </p>
+        <% } %>
+    </div>
+<br>
