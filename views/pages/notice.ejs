@@ -16,12 +16,15 @@
             <tbody>
                 <% items.forEach(function(item, index) { %>
                     <tr>
-                        <td style="width: 1%;text-align: center"><%= index + 1 %></td>
+                        <td style="width: 1%;text-align: center"><%= item.id %></td>
                         <td style="width: 49%;text-align: center"><%= item.title %></td>
                         <td style="width: 20%;text-align: center"><%= item.description %></td>
                         <td solspan="2" style="width: 20%;text-align: center">
-                            <a href="/notice/edit/<%= item.id %>">Edit</a>
-                            <a href="/notice/delete/<%= item.id %>">Delete</a>
+                            <a href="/notice/<%= item.id %>/edit">Edit</a>
+                            <form mehtod="post" action="/notice/<%= item.id %>/delete">
+                                <button class="submit" type="submit" name="submit">Delete</button>
+                            </form>
+
                         </td>
                     </tr>
                 <%}); %>

@@ -1,0 +1,29 @@
+<% include ../partial_views/navbar %>
+
+<form action="/notice/<%= items[0].id %>/edit" method="post">
+    <div>
+        <label for="title">Title</label>
+        <div>
+            <input type="text" name="title" value="<%= items[0].title %>" required>
+
+        </div>
+    </div>
+
+    <div>
+        <label for="description">Description</label>
+        <div>
+            <textarea name="description" id="description" cols="30" rows="4" required >
+                <%= items[0].description %>
+            </textarea>
+
+        </div>
+    </div>
+
+    <div>
+
+        <input type="submit" name="submit" value="Edit Notice" >
+
+    </div>
+</form>
+
+<% include ../partial_views/footer %>

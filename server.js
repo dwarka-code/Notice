@@ -72,6 +72,7 @@ app.post('/login',function(req,res){
             // console.log('The solution is: ', results);
             if(results.length >0){
                 if(results[0].password == password){
+                    res.cookie('idd',results[0].id);
                     res.cookie("emaill",results[0].email);
                     res.cookie("passwordd",results[0].password);
                     res.redirect('/notice');
@@ -102,7 +103,8 @@ app.get('/notice',function(req,res){
         else {
 
             res.render('pages/notice', {items: result });
-            console.log(result);
+            //console.log(result);
+            //console.log("ID: "+req.cookies.idd);
         }
     });
 
@@ -113,6 +115,7 @@ app.get('/notice',function(req,res){
 app.get('/notice/add_notice',function(req,res){
 
     res.render('pages/add_notice');
+    //console.log(req.cookies.idd);
 });
 
 app.post('/notice/add_notice', function(req, res){
@@ -131,7 +134,52 @@ app.post('/notice/add_notice', function(req, res){
 
 });
 
+app.get('/notice/:id/edit',function(req,res){
 
+    con.query('SELECT * FROM notice WHERE id=?',[req.params.id],function(err, result){
+
+        if(err)
+            throw err;
+        else
+            res.render('pages/edit',{items: result});
+    });
+
+
+});
+
+
+app.post('/notice/:id/edit',function(req,res){
+
+   var title = req.body.title;
+   var description = req.body.description;
+
+   con.query("UPDATE notice SET title = ?, description = ? WHERE id = ?",[title, description, req.params.id],function(err, result){
+
+       if(err)
+           throw err;
+       else{
+
+           res.redirect('/notice');
+           console.log(req.params);
+       }
+   });
+});
+
+app.get('/notice/:id/delete',function(req,res){
+
+    con.query('DELETE FROM notice WHERE id=?',[req.params.id],function(err, result){
+
+        if(err)
+            throw err;
+        else{
+
+            if(result.affectedRows){
+                res.redirect('/notice');
+            }
+        }
+    });
+
+});
 
 
 var server = app.listen(3000, function(){
