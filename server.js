@@ -4,6 +4,7 @@ var mysql = require('mysql');
 var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var mongo = require('mongodb').MongoClient;
 
 
 app.use(cookieParser());
@@ -21,6 +22,17 @@ const con = mysql.createConnection({
     user: "root",
     password: "",
     database: "mydb"
+});
+
+var url='mongodb://127.0.0.1:27017/mydb';
+
+mongo.connect('mongodb://127.0.0.1:27017/mydb', { useNewUrlParser: true }, function (err, db) {
+
+    if (err) {
+        throw new Error('Database failed to connect!');
+    } else {
+        console.log('MongoDB successfully connected on port 27017.');
+    }
 });
 
 app.get('/',function(req, res){
@@ -95,7 +107,7 @@ app.post('/login',function(req,res){
 });
 
 app.get('/notice',function(req,res){
-
+/*
     con.query('SELECT * FROM notice',function(err, result){
 
         if(err)
@@ -106,6 +118,22 @@ app.get('/notice',function(req,res){
             //console.log(result);
             //console.log("ID: "+req.cookies.idd);
         }
+    });
+    */
+var resultArray=[];
+    mongo.connect(url,{ useNewUrlParser: true }, function(err, db){
+
+        //assert.equal(null, err);
+        var cursor = db.collection('user').find();
+        cursor.forEach(function(doc, err){
+
+            //assert.equal(null, err);
+            resultArray.push(doc);
+        }, function(){
+
+            db.close();
+            res.render('/notice',{items: resultArray})
+        });
     });
 
 });
@@ -119,7 +147,7 @@ app.get('/notice/add_notice',function(req,res){
 });
 
 app.post('/notice/add_notice', function(req, res){
-
+/*
     var title = req.body.title;
     var description = req.body.description;
 
@@ -131,6 +159,25 @@ app.post('/notice/add_notice', function(req, res){
             res.redirect('/notice');
         }
     });
+*/
+
+    var item={
+
+        title: req.body.title,
+        description: req.body.description
+    };
+
+    mongo.connect(url,{ useNewUrlParser: true }, function(err, db){
+
+        //assert.equal(null, err);
+        db.collection('user').insertOne(item, function(err, result){
+
+            //assert.equal(null, err);
+            console.log("Item inserted");
+            db.close();
+        })
+    })
+
 
 });
 
