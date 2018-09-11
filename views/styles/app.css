@@ -28,3 +28,11 @@ li a:hover {
     text-align: center;
 
 }
+
+.logout .logoutbutton{
+
+    float: right;
+    padding: 10px;
+    width: 90px;
+    height: 40px;
+}

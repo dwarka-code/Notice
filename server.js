@@ -27,7 +27,6 @@ const con = mysql.createConnection({
 
 app.get('/',function(req, res){
 
-    //con.query("SELECT * FROM user");
     res.render('pages/home');
 
 });
@@ -39,6 +38,7 @@ app.post('/register', user.registerUser)
 app.get('/login', user.renderLogin)
 app.post('/login', user.getLogin)
 app.get('/notice', notice.renderNotice)
+app.post('/', notice.logOut)
 
 //Add notice
 app.get('/notice/add_notice', notice.renderAddNotice)

@@ -94,6 +94,14 @@ function deleteNotice(req, res){
     });
 }
 
+function logOut(req, res){
+
+    res.clearCookie('idd');
+    res.clearCookie('emaill');
+    res.clearCookie('passwordd');
+    res.render('pages/home');
+}
+
 
 module.exports = {
 
@@ -102,5 +110,6 @@ module.exports = {
     addNotice,
     renderEditNotice,
     editNotice,
-    deleteNotice
+    deleteNotice,
+    logOut
 }
