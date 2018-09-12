@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 
 const user = require('./controller/user.js')
 const notice = require('./controller/notice.js')
+const admin = require('./controller/admin.js')
 
 app.use(cookieParser());
 
@@ -39,6 +40,10 @@ app.get('/login', user.renderLogin)
 app.post('/login', user.getLogin)
 app.get('/notice', notice.renderNotice)
 app.post('/', notice.logOut)
+
+//Admin
+app.get('/admin',admin.renderAdmin)
+app.get('/admin/:id/delete',admin.deleteUser)
 
 //Add notice
 app.get('/notice/add_notice', notice.renderAddNotice)

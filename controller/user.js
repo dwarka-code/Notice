@@ -1,4 +1,6 @@
 var mysql = require('mysql');
+var bcrypt = require('bcrypt');
+const saltRound = 10;
 
 const con = mysql.createConnection({
 
@@ -20,14 +22,18 @@ function registerUser(req, res){
     var email = req.body.email;
     var password = req.body.password;
 
-    con.query("INSERT INTO user SET name = ?, email = ?, password = ?",[name,email,password],function(err, result){
+    bcrypt.hash(password, saltRound, function(err, hash){
 
-       if(err)
-           res.send("User already exist");
-       else{
-           res.redirect('/');
-       }
-    });
+        con.query("INSERT INTO user SET name = ?, email = ?, password = ?",[name,email,hash],function(err, result){
+
+            if(err)
+                res.send("User already exist");
+            else{
+                res.redirect('/');
+            }
+         });
+    })
+    
 }
 
 function renderLogin(req, res){
