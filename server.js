@@ -1,10 +1,20 @@
 var express = require('express');
 var http = require('http');
 var mysql = require('mysql');
-var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var mongo = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient
+var app = express();
+
+const user = require('./controller/user.js')
+const admin = require('./controller/admin.js')
+
+
+
+//username: lrs
+//password: cs23lrs
+
+var url = 'mongodb://lrs:cs23lrs@ds111063.mlab.com:11063/mydb'
 
 
 app.use(cookieParser());
@@ -16,220 +26,25 @@ app.use(express.static('views'));
 app.set('view engine', 'ejs');
 
 
-const con = mysql.createConnection({
-
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "mydb"
-});
-
-var url='mongodb://127.0.0.1:27017/mydb';
-
-mongo.connect('mongodb://127.0.0.1:27017/mydb', { useNewUrlParser: true }, function (err, db) {
-
-    if (err) {
-        throw new Error('Database failed to connect!');
-    } else {
-        console.log('MongoDB successfully connected on port 27017.');
-    }
-});
-
 app.get('/',function(req, res){
 
-    //con.query("SELECT * FROM user");
-    res.render('pages/home');
+    res.render('pages/home')
+})
 
-});
+//Register
+app.get('/register',user.renderRegister)
+app.post('/register',user.registerUser)
 
+//Admin
+app.get('/admin', admin.renderAdmin)
 
-app.get('/register', function(req, res){
-
-    res.render('pages/register');
-});
-
-app.post('/register',function(req, res){
-
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
-
-    con.query("INSERT INTO user SET name = ?, email = ?, password = ?",[name,email,password],function(err, result){
-
-       if(err)
-           res.send("User already exist");
-       else{
-           res.redirect('/');
-       }
-    });
-});
-
-app.get('/login',function(req, res){
-
-   res.render('pages/login');
-});
-
-app.post('/login',function(req,res){
-
-    var email= req.body.email;
-    var password = req.body.password;
-    con.query('SELECT * FROM user WHERE email = ?',[email], function (error, results, fields) {
-        if (error) {
-            // console.log("error ocurred",error);
-            res.send({
-                "code":400,
-                "failed":"error ocurred"
-            })
-        }else{
-            // console.log('The solution is: ', results);
-            if(results.length >0){
-                if(results[0].password == password){
-                    res.cookie('idd',results[0].id);
-                    res.cookie("emaill",results[0].email);
-                    res.cookie("passwordd",results[0].password);
-                    res.redirect('/notice');
-                }
-                else{
-                    res.send({
-                        "code":204,
-                        "success":"Email or password is wrong!"
-                    });
-                }
-            }
-            else{
-                res.send({
-                    "code":204,
-                    "success":"Email does not exits"
-                });
-            }
-        }
-    });
-});
-
-app.get('/notice',function(req,res){
-/*
-    con.query('SELECT * FROM notice',function(err, result){
-
-        if(err)
-            throw err;
-        else {
-
-            res.render('pages/notice', {items: result });
-            //console.log(result);
-            //console.log("ID: "+req.cookies.idd);
-        }
-    });
-    */
-var resultArray=[];
-    mongo.connect(url,{ useNewUrlParser: true }, function(err, db){
-
-        //assert.equal(null, err);
-        var cursor = db.collection('user').find();
-        cursor.forEach(function(doc, err){
-
-            //assert.equal(null, err);
-            resultArray.push(doc);
-        }, function(){
-
-            db.close();
-            res.render('/notice',{items: resultArray})
-        });
-    });
-
-});
+    
+        
 
 
+app.listen(3000, function(){
 
-app.get('/notice/add_notice',function(req,res){
-
-    res.render('pages/add_notice');
-    //console.log(req.cookies.idd);
-});
-
-app.post('/notice/add_notice', function(req, res){
-/*
-    var title = req.body.title;
-    var description = req.body.description;
-
-    con.query("INSERT INTO notice SET title = ?, description = ?",[title,description],function(err, result){
-
-        if(err)
-            throw err;
-        else{
-            res.redirect('/notice');
-        }
-    });
-*/
-
-    var item={
-
-        title: req.body.title,
-        description: req.body.description
-    };
-
-    mongo.connect(url,{ useNewUrlParser: true }, function(err, db){
-
-        //assert.equal(null, err);
-        db.collection('user').insertOne(item, function(err, result){
-
-            //assert.equal(null, err);
-            console.log("Item inserted");
-            db.close();
-        })
-    })
+    console.log("Listening to port 3000")
+})
 
 
-});
-
-app.get('/notice/:id/edit',function(req,res){
-
-    con.query('SELECT * FROM notice WHERE id=?',[req.params.id],function(err, result){
-
-        if(err)
-            throw err;
-        else
-            res.render('pages/edit',{items: result});
-    });
-
-
-});
-
-
-app.post('/notice/:id/edit',function(req,res){
-
-   var title = req.body.title;
-   var description = req.body.description;
-
-   con.query("UPDATE notice SET title = ?, description = ? WHERE id = ?",[title, description, req.params.id],function(err, result){
-
-       if(err)
-           throw err;
-       else{
-
-           res.redirect('/notice');
-           console.log(req.params);
-       }
-   });
-});
-
-app.get('/notice/:id/delete',function(req,res){
-
-    con.query('DELETE FROM notice WHERE id=?',[req.params.id],function(err, result){
-
-        if(err)
-            throw err;
-        else{
-
-            if(result.affectedRows){
-                res.redirect('/notice');
-            }
-        }
-    });
-
-});
-
-
-var server = app.listen(3000, function(){
-
-    console.log("Listening on port 3000");
-});

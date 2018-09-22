@@ -1,0 +1,31 @@
+<br>
+    <div>
+        <% if (items.length > 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 49%;text-align: center">Name</th>
+                    <th style="width: 20%;text-align: center">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% items.forEach(function(item, index) { %>
+                    <tr>
+                        <td style="width: 49%;text-align: center"><%= item.name %></td>
+                        <td style="width: 20%;text-align: center"><%= item.email %></td>
+                        <td solspan="2" style="width: 20%;text-align: center">
+                            <form mehtod="post" action="/admin/<%= item.id %>/delete">
+                                <button class="submit" type="submit" name="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <%}); %>
+            </tbody>
+        </table>
+        <% }else{ %>
+        <p>
+            There are no records avaible
+        </p>
+        <% } %>
+    </div>
+<br>
