@@ -42,8 +42,52 @@ function registerUser(req, res){
 
 }
 
+function renderLogin(req, res){
+
+    res.render('pages/login')
+}
+
+function getLogin(req, res){
+
+    var email = req.body.email
+    var password = req.body.password
+
+    MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
+
+    
+        if(err)
+            console.log(err);
+        else{
+    
+            var db = database.db('mydb')
+            db.collection('user').findOne({email: email, password: password}, function(err, results){
+
+                if(err){
+                    console.log(err);
+                }
+                if(!results){
+                    res.send("Email or password is wrong!")
+                }
+                else{
+                    console.log("SUCCES!")
+                    res.cookie("emaill",results.email);
+                    res.cookie("passwordd",results.password);
+                    res.redirect('/notice')
+                }
+                   
+            })
+            
+        }
+            
+    })
+
+
+}
+
 module.exports = {
 
     renderRegister,
-    registerUser
+    registerUser,
+    renderLogin,
+    getLogin
 }

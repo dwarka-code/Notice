@@ -8,6 +8,7 @@ var app = express();
 
 const user = require('./controller/user.js')
 const admin = require('./controller/admin.js')
+const notice = require('./controller/notice.js')
 
 
 
@@ -35,8 +36,15 @@ app.get('/',function(req, res){
 app.get('/register',user.renderRegister)
 app.post('/register',user.registerUser)
 
+//Login
+app.get('/login',user.renderLogin)
+app.post('/login',user.getLogin)
+
 //Admin
 app.get('/admin', admin.renderAdmin)
+
+//Notice
+app.get('/notice',notice.renderNotice)
 
     
         
