@@ -21,16 +21,15 @@ const notice = require('./controller/notice.js')
 const url = 'mongodb://lrs:cs23lrs@ds111063.mlab.com:11063/mydb'
 
 
+app.use(express.static('views'));
 app.use(cookieParser());
 app.use(cors())//asta e pt ca UI-ul e pe alt domeniu fata de backend
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static('views'));
 
 app.set('view engine', 'ejs');
-app.use(cookieParser());
 
 
 
@@ -57,12 +56,12 @@ app.delete('/notice/delete/:id', notice.deleteNotice)
    
 
     
-        
 
 
 app.listen(4000, function(){
 
     console.log("Listening to port 4000")
 })
+
 
 

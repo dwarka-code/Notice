@@ -1,7 +1,19 @@
 var MongoClient = require('mongodb').MongoClient
-var cookieParser = require('cookie-parser');
+
 
 var url = 'mongodb://lrs:cs23lrs@ds111063.mlab.com:11063/mydb'
+
+MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
+         
+    if(err){
+     console.log(err)
+    }
+     else{
+ 
+         db = database.db('mydb')
+     }
+               
+ })
 
 function registerUser(req, res){
 
@@ -10,104 +22,67 @@ function registerUser(req, res){
         password: req.body.password,
         name: req.body.name
     }
-    MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
-
     
-        if(err)
-            console.log(err);
-        else{
-    
-            var db = database.db('mydb')
-            db.collection('user').findOne({email: item.email})
-            .then(user =>{
-                if(!user){
-
-                    db.collection('user').insertOne(item, function(err, result){
-
-                        if(err)
-                            console.log(err)
-                        else{
-
-                            console.log("Item added!")
-                            res.json({status: 'User received!'})
-                            database.close()
-                        }
-                    })
-                }
-                else{
-
-                    res.json({error: 'User already exist'})
-                }
-
-            })
-            .catch(err => res.send(err))
-            /*
+    db.collection('user').findOne({email: item.email})
+    .then(user =>{
+        if(!user){
             db.collection('user').insertOne(item, function(err, result){
 
                 if(err)
                     console.log(err)
-                else{
-
-                    console.log("Item added!");
-                    res.json({status: 'User received!'})
-                    database.close();
+                else{   
+                    res.cookie('emaill',req.body.email)                        
+                    console.log("Item added!")
+                    res.json({
+                        status: 'User received!',
+                        data: 'done'
+                    })
                 }
             })
-            */
-            
         }
-            
+        else{
+
+            res.json({error: 'User already exist'})
+        }
     })
+    .catch(err => res.send(err))
 
 }
+
 
 function getLogin(req, res){
 
-    var email = req.body.email
-    var password = req.body.password
 
-    MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
+    let email = req.body.email
+    let password = req.body.password
 
-    
-        if(err)
-            console.log(err);
-        else{
-    
-            var db = database.db('mydb')
-            db.collection('user').findOne({email: email, password: password}, function(err, results){
 
-                if(err){
-                    console.log(err);
-                }
-                if(!results){
-                    return res.json({
-                        status: 'Email or password is wrong',
-                        email: '',
-                        password: ''
-                    })
-                }
-                else{
-                    console.log("SUCCES!")
-                    console.log("LOGIN",results.email)
-                    console.log("LOGIN",results.password)
-                    res.cookie('emaill',results.email);
-                    res.cookie('passwordd',results.password);
-                    return res.json({
-                        status: 'Users Log in',
-                        email: email,
-                        password: password
-                    })
-                }
-                   
+    db.collection('user').findOne({email: email, password: password})
+    .then((user)=>{
+
+        if(user){
+
+            res.cookie("user_email",user.email)
+            res.cookie("user_passwordd",user.password)
+
+            
+            return res.json({
+                status: 'Users Log in',
+                email: email,
+                password: password
             })
-            
         }
-            
+        else{
+                return res.json({
+                status: 'Email or password is wrong',
+                email: '',
+                password: ''
+            })
+        }
     })
 
 
 }
-
 module.exports = {
 
     registerUser,
