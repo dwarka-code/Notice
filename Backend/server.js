@@ -20,17 +20,20 @@ const notice = require('./controller/notice.js')
 
 const url = 'mongodb://lrs:cs23lrs@ds111063.mlab.com:11063/mydb'
 
+const corsOptions={
+    credentials: true,
+    origin: 'http://localhost:3000'
+}
+app.use(cors(corsOptions))//asta e pt ca UI-ul e pe alt domeniu fata de backend
 
 app.use(express.static('views'));
 app.use(cookieParser());
-app.use(cors())//asta e pt ca UI-ul e pe alt domeniu fata de backend
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.set('view engine', 'ejs');
-
+app.set('view engine', 'ejs');  
 
 
 //Register
@@ -38,7 +41,7 @@ app.set('view engine', 'ejs');
 app.post('/register',user.registerUser)
 
 //Login
-app.post('/login',user.getLogin)
+app.post('/login',cors(corsOptions),user.getLogin)
 
 //Admin
 app.get('/admin', admin.renderAdmin)
@@ -47,7 +50,7 @@ app.delete('/admin/delete/:id',admin.deleteUser)
 
 
 //Notice
-app.get('/notice',notice.renderNotice)
+app.get('/notice',cors(corsOptions),notice.renderNotice)
 app.get('/notice/:id',notice.renderNoticeDetails)
 app.put('/notice/edit/:id',notice.editNotice)
 app.post('/notice/addnotice',notice.addNotice)

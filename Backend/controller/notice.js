@@ -17,6 +17,8 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 
 function renderNotice(req, res){
    
+            console.log("Notice_page: ",req.cookies.notice1)
+            console.log("Notice_page: ",req.cookies.notice2)
             let resultArray= []
             var cursor = db.collection('notice').find()
             cursor.forEach(function(doc, err){
@@ -40,6 +42,7 @@ function renderNoticeDetails(req, res){
         if(err)
             console.log(err)
         else{
+            console.log(rez._id)
 
             return res.json({
                 data: rez

@@ -1,4 +1,5 @@
 import React from 'react'
+import Chart from './Chart'
 
 class Admin extends React.Component{
 
@@ -7,7 +8,9 @@ class Admin extends React.Component{
         super();
         this.state={
 
-            users: []
+            users: [],
+            age_bigger: 0,
+            age_smaller: 0
         }
         
     }
@@ -21,8 +24,15 @@ class Admin extends React.Component{
 
             this.setState({
 
-                users: res.data
+                users: res.data,
+                age_bigger: res.age_bigger,
+                age_smaller: res.age_smaller
+
             })
+        })
+        .then(()=>{
+
+            console.log(this.state)
         })
     }
 
@@ -42,7 +52,6 @@ class Admin extends React.Component{
         .then(res => res.json())
         .then(data => {
 
-            console.log("mergi baaaaa",data)
             this.fetchUsers()
         })
         .catch(err => console.log(err))
@@ -61,7 +70,6 @@ class Admin extends React.Component{
         .then(res => res.json())
         .then(data => {
 
-            console.log("mergi baaaaa",data)
             this.fetchUsers()
             
         })
@@ -75,11 +83,17 @@ class Admin extends React.Component{
 
     
         return (            
+
+            <div>
+                <h5>Numarul personalelor cu varsta peste 18 ani: {this.state.age_bigger}</h5>
+                <h5>Numarul personalelor cu varsta sub 18 ani: {this.state.age_smaller}</h5>
+            
                     <table>
                         <thead>
                             <tr>
                                 <th>Email</th>
                                 <th>Name</th>
+                                <th>Age</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,6 +103,7 @@ class Admin extends React.Component{
                                     <tr key={users._id}>
                                         <td>{users.email}</td>
                                         <td>{users.name}</td>
+                                        <td>{users.age}</td>
                                         <td>
                                             <button onClick={()=> this.editUser(users._id)}>Edit</button>
                                             <button onClick={()=> this.deleteUser(users._id)}>Delete</button>
@@ -98,9 +113,11 @@ class Admin extends React.Component{
                             })}
                         </tbody>     
                     </table>
-                    
-                           
-                
+                    <Chart age1={this.state.age_bigger} age2={this.state.age_smaller}/>
+                    </div>
+                        
+                        
+            
         )
 
     }

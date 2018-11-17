@@ -22,15 +22,28 @@ function renderAdmin(req, res){
 
             console.log(req.cookies.emaill)
             let resultArray = []
+            let age_bigger = 0
+            let age_smaller = 0
             let cursor = db.collection('user').find()
             cursor.forEach(function(doc, err){
 
+
+                console.log("AGE:",doc.age)
+                if(doc.age > 18)
+                    age_bigger++
+                if(doc.age< 18)
+                    age_smaller++
+
+                console.log("Peste 18:",age_bigger)
+                console.log("Sub 18: ",age_smaller)
                 resultArray.push(doc)
             }, function(){
 
                 return res.json({
 
-                    data: resultArray
+                    data: resultArray,
+                    age_bigger: age_bigger,
+                    age_smaller: age_smaller
                 })
              
             })    

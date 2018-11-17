@@ -23,6 +23,7 @@ class LoginContainer extends React.Component{
         fetch(url,{
 
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(this.state),
             headers: new Headers({'Content-Type': 'application/json'})
         })
@@ -65,7 +66,7 @@ class LoginContainer extends React.Component{
 
         return (
             <div>
-                 <h5 className="center red">{this.state.message}</h5>
+                <h5 className="center red">{this.state.message}</h5>
                 <h1>Login</h1>
                <form onSubmit={this.getLogin}>
                     

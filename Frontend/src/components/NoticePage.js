@@ -16,13 +16,15 @@ class NoticePage extends React.Component{
 
     fetchNotice(){
 
+        
         var url = "http://localhost:4000/notice"
-        fetch(url)
+        fetch(url,{ credentials: 'include',})
         .then(res => res.json())
         .then(res =>{
 
             this.setState({
 
+                
                 notices: res.data,
             })
         })

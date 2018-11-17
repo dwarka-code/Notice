@@ -20,7 +20,8 @@ function registerUser(req, res){
     var item = {
         email: req.body.email,
         password: req.body.password,
-        name: req.body.name
+        name: req.body.name,
+        age: req.body.age
     }
     
     db.collection('user').findOne({email: item.email})
@@ -30,24 +31,26 @@ function registerUser(req, res){
 
                 if(err)
                     console.log(err)
-                else{   
-                    res.cookie('emaill',req.body.email)                        
+                else{                          
                     console.log("Item added!")
                     res.json({
-                        status: 'User received!',
-                        data: 'done'
+                        status: 'User log in!',
                     })
                 }
             })
         }
         else{
 
-            res.json({error: 'User already exist'})
+            res.json({
+                status: 'User already exists!',
+                email: ''
+            })
         }
     })
     .catch(err => res.send(err))
 
 }
+
 
 
 function getLogin(req, res){
@@ -62,10 +65,17 @@ function getLogin(req, res){
 
         if(user){
 
-            res.cookie("user_email",user.email)
-            res.cookie("user_passwordd",user.password)
+            
+            res.cookie("cookie_email_login_page",user.email)
+            res.cookie("cookie_password_login_page",user.password)
+
+            res.cookie("notice1",user.email)
+            res.cookie("notice2",user.password)
 
             
+
+            console.log("COOKIE",req.cookies.cookie_email_login_page)
+            console.log("COOKIE",req.cookies.cookie_password_login_page)
             return res.json({
                 status: 'Users Log in',
                 email: email,
@@ -81,10 +91,9 @@ function getLogin(req, res){
         }
     })
 
-
 }
 module.exports = {
 
     registerUser,
-    getLogin
+    getLogin,
 }
