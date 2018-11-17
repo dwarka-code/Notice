@@ -12,9 +12,6 @@ const admin = require('./controller/admin.js')
 const notice = require('./controller/notice.js')
 
 
-
-
-
 //username: lrs
 //password: cs23lrs
 
@@ -50,7 +47,7 @@ app.delete('/admin/delete/:id',admin.deleteUser)
 
 
 //Notice
-app.get('/notice',cors(corsOptions),notice.renderNotice)
+app.get('/notice',cors(corsOptions),notice.renderNotice,)
 app.get('/notice/:id',notice.renderNoticeDetails)
 app.put('/notice/edit/:id',notice.editNotice)
 app.post('/notice/addnotice',notice.addNotice)

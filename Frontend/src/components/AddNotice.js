@@ -49,9 +49,9 @@ class AddNotice extends React.Component{
     render(){
 
         return (
-            <div className="registercontainer">
+            <div>
 
-
+                <h1 className="center">Add Notice</h1>
                 <form onSubmit={this.addNotice}>                  
                     <input type="text" name="title" onChange={this.handleChange} placeholder="Title"/>
                     <input type="text" name="description" onChange={this.handleChange} placeholder="Description"/>

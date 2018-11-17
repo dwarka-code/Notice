@@ -66,7 +66,7 @@ class NoticeDetails extends Component{
         return(
         
         <div>
-            <h1>{this.state.details.title}</h1>
+            <h1 className="center">{this.state.details.title}</h1>
             <ul className="collection">
                 <li className="collection-item">Title: {this.state.details.title}</li>
                 <li className="collection-item">Description: {this.state.details.description}</li>

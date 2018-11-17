@@ -18,15 +18,20 @@ class NoticePage extends React.Component{
 
         
         var url = "http://localhost:4000/notice"
-        fetch(url,{ credentials: 'include',})
+        fetch(url,{ credentials: 'include'})
         .then(res => res.json())
         .then(res =>{
+            if(res.logIn === ''){
 
-            this.setState({
+                this.props.history.push('/login')
+            }else{
 
-                
-                notices: res.data,
-            })
+                this.setState({
+              
+                    notices: res.data,
+                })
+            }
+            
         })
     }
 
@@ -49,11 +54,12 @@ class NoticePage extends React.Component{
         return(
           
             <div>
-                <a href="/notice/addnotice"className="btn-floating btn-large red"><i className="fa fa-plus"></i></a>
+                <h1 className="center">Notice</h1>
                    <ul className="collection">
 
                         {noticeItems}
                    </ul>
+                   <a href="/notice/addnotice"className="btn-floating btn-large red"><i className="fa fa-plus"></i></a>
             </div>
                     
         )

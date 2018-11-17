@@ -3,6 +3,7 @@ var ObjectID = require('mongodb').ObjectID
 
 var url = 'mongodb://lrs:cs23lrs@ds111063.mlab.com:11063/mydb'
 
+
 MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
          
     if(err){
@@ -15,23 +16,39 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
                
  })
 
-function renderNotice(req, res){
+function renderNotice(req, res,next){
    
-            console.log("Notice_page: ",req.cookies.notice1)
-            console.log("Notice_page: ",req.cookies.notice2)
+            console.log("Notice_page: ",req.cookies.user_idd)
+            console.log("Notice_page: ",req.cookies.user_email)
+            
             let resultArray= []
             var cursor = db.collection('notice').find()
             cursor.forEach(function(doc, err){
     
                 resultArray.push(doc)
             }, function(){
-    
-                return res.json({
-    
-                    data: resultArray
-                })
-                //database.close()
-             
+
+                if(req.cookies.user_idd){
+  
+                    db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
+                    .then((val)=>{
+              
+                        if(val){
+                          res.json({
+                              data: resultArray,
+                              logIn:'User is Log in',
+                            })
+                          next();
+                        }
+                        else{
+                          res.json({logIn: ''})
+                        }
+                    });
+              
+                }
+                else{
+                    res.json({logIn: ''})
+                }
             })          
 }
 
@@ -42,7 +59,6 @@ function renderNoticeDetails(req, res){
         if(err)
             console.log(err)
         else{
-            console.log(rez._id)
 
             return res.json({
                 data: rez
@@ -63,8 +79,6 @@ function addNotice(req, res){
         if(err)
             console.log(err)
         else{
-
-            console.log("Item added");
             res.json({status: 'Notice Saved'})
             
         }

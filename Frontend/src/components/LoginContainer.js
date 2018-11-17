@@ -67,14 +67,15 @@ class LoginContainer extends React.Component{
         return (
             <div>
                 <h5 className="center red">{this.state.message}</h5>
-                <h1>Login</h1>
-               <form onSubmit={this.getLogin}>
+                <h1 className="center">Login</h1>
+                <form onSubmit={this.getLogin}>
                     
                     <input type="text" name="email" value={this.state.email} onChange={this.handleEvent} placeholder="Email"/>
                     <input type="password" name="password" value={this.state.password} onChange={this.handleEvent} placeholder="Password"/>
                     <button className="btn blue" type="submit" >Login</button>
                     
                </form>
+               <a href="/register" className="waves-effect waves-light btn-large right">Register</a>
             </div>
         )
     }

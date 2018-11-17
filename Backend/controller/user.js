@@ -32,7 +32,6 @@ function registerUser(req, res){
                 if(err)
                     console.log(err)
                 else{                          
-                    console.log("Item added!")
                     res.json({
                         status: 'User log in!',
                     })
@@ -65,17 +64,9 @@ function getLogin(req, res){
 
         if(user){
 
-            
-            res.cookie("cookie_email_login_page",user.email)
-            res.cookie("cookie_password_login_page",user.password)
+            res.cookie('user_idd',user._id)
+            res.cookie("user_email",user.email)
 
-            res.cookie("notice1",user.email)
-            res.cookie("notice2",user.password)
-
-            
-
-            console.log("COOKIE",req.cookies.cookie_email_login_page)
-            console.log("COOKIE",req.cookies.cookie_password_login_page)
             return res.json({
                 status: 'Users Log in',
                 email: email,

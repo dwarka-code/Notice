@@ -89,15 +89,15 @@ class EditNotice extends React.Component{
     render(){
 
         return (
-            <div className="registercontainer">
+            <div>
 
-                
+               <h1 className="center">Edit Notice</h1>
                <form onSubmit={this.onSubmit}>
 
                     
                     <input type="text" name="title" ref="title" value={this.state.title} onChange={this.handleInput}  placeholder="Title"/>
                     <input type="text" name="description" ref="description" value={this.state.description} onChange={this.handleInput} placeholder="Description"/>
-                    <button type="submit">Edit</button>
+                    <button className="btn green" type="submit">Edit</button>
                     
                </form>
             </div>

@@ -17,10 +17,8 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 })
 
 
-function renderAdmin(req, res){
+function renderAdmin(req, res, next){
 
-
-            console.log(req.cookies.emaill)
             let resultArray = []
             let age_bigger = 0
             let age_smaller = 0
@@ -28,23 +26,37 @@ function renderAdmin(req, res){
             cursor.forEach(function(doc, err){
 
 
-                console.log("AGE:",doc.age)
                 if(doc.age > 18)
                     age_bigger++
                 if(doc.age< 18)
                     age_smaller++
 
-                console.log("Peste 18:",age_bigger)
-                console.log("Sub 18: ",age_smaller)
                 resultArray.push(doc)
             }, function(){
 
-                return res.json({
-
-                    data: resultArray,
-                    age_bigger: age_bigger,
-                    age_smaller: age_smaller
-                })
+                if(req.cookies.user_idd){
+  
+                    db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
+                    .then((val)=>{
+              
+                        if(val){
+                          res.json({
+                              data: resultArray,
+                              age_bigger: age_bigger,
+                              age_smaller: age_smaller,
+                              logIn:'User is Log in',
+                            })
+                          next();
+                        }
+                        else{
+                          res.json({logIn: ''})
+                        }
+                    });
+              
+                }
+                else{
+                    res.json({logIn: ''})
+                }
              
             })    
 
@@ -57,8 +69,6 @@ function deleteUser(req, res){
         if(err)
             console.log(err)
         else{
-            //resultArray.push(rez)
-            //console.log(resultArray)
             return res.json({
 
                 data: rez

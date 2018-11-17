@@ -18,17 +18,25 @@ class Admin extends React.Component{
     fetchUsers(){
 
         var url = "http://localhost:4000/admin"
-        fetch(url)
+        fetch(url,{ credentials: 'include'})
         .then(res => res.json())
         .then(res => {
 
-            this.setState({
+            if(res.logIn === ''){
 
-                users: res.data,
-                age_bigger: res.age_bigger,
-                age_smaller: res.age_smaller
+                console.log("MUIE BA")
+                this.props.history.push('/')
+            }
+            else{
 
-            })
+                this.setState({
+
+                    users: res.data,
+                    age_bigger: res.age_bigger,
+                    age_smaller: res.age_smaller
+    
+                })
+            }
         })
         .then(()=>{
 
