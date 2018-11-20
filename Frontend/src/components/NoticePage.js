@@ -11,6 +11,26 @@ class NoticePage extends React.Component{
             notices: []
         }
 
+        this.logOut = this.logOut.bind(this)
+
+    }
+
+    logOut(){
+
+        let url = "http://localhost:4000/"
+        fetch(url,{
+
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(this.state),
+            headers: new Headers({'Content-Type': 'application/json'})
+        },{ credentials: 'include'})
+        .then(res => res.json())
+        .then(res =>{
+
+            console.log(res.status)
+            this.props.history.push('/')
+        })
     }
     
 
@@ -23,7 +43,7 @@ class NoticePage extends React.Component{
         .then(res =>{
             if(res.logIn === ''){
 
-                this.props.history.push('/login')
+                this.props.history.push('/')
             }else{
 
                 this.setState({
@@ -31,7 +51,6 @@ class NoticePage extends React.Component{
                     notices: res.data,
                 })
             }
-            
         })
     }
 
@@ -54,6 +73,7 @@ class NoticePage extends React.Component{
         return(
           
             <div>
+                <button onClick={this.logOut} className="btn blue right" type="submit" >Log out</button>
                 <h1 className="center">Notice</h1>
                    <ul className="collection">
 

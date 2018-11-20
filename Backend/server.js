@@ -47,11 +47,13 @@ app.delete('/admin/delete/:id',admin.deleteUser)
 
 
 //Notice
-app.get('/notice',cors(corsOptions),notice.renderNotice,)
-app.get('/notice/:id',notice.renderNoticeDetails)
-app.put('/notice/edit/:id',notice.editNotice)
-app.post('/notice/addnotice',notice.addNotice)
-app.delete('/notice/delete/:id', notice.deleteNotice)
+app.get('/notice',cors(corsOptions),notice.renderNotice)
+app.get('/notice/:id',cors(corsOptions),notice.renderNoticeDetails)
+app.put('/notice/edit/:id',cors(corsOptions),notice.editNotice)
+app.post('/notice/addnotice',cors(corsOptions),notice.addNotice)
+app.delete('/notice/delete/:id', cors(corsOptions),notice.deleteNotice)
+app.post('/',cors(corsOptions), notice.logOut)
+
 
    
 

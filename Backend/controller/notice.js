@@ -16,11 +16,10 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
                
  })
 
-function renderNotice(req, res,next){
-   
-            console.log("Notice_page: ",req.cookies.user_idd)
-            console.log("Notice_page: ",req.cookies.user_email)
+function renderNotice(req, res, next){
+
             
+            console.log("NOTICE_PAGE",req.cookies.user_idd)
             let resultArray= []
             var cursor = db.collection('notice').find()
             cursor.forEach(function(doc, err){
@@ -112,10 +111,19 @@ function editNotice(req, res){
             return res.json({
 
                 data: rez
+
             })
             database.close()
         }
     })
+}
+
+function logOut(req, res){
+
+    res.clearCookie('user_idd');
+    res.clearCookie('user_email');
+
+    res.json({status: 'Log out'})
 }
 
 module.exports = {
@@ -124,5 +132,6 @@ module.exports = {
     renderNoticeDetails,
     addNotice,
     deleteNotice,
-    editNotice
+    editNotice,
+    logOut
 }
