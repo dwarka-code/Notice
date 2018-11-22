@@ -20,6 +20,8 @@ function renderNotice(req, res, next){
 
             
             console.log("NOTICE_PAGE",req.cookies.user_idd)
+            console.log("NOTICE_PAGE",req.cookies.user_name)
+            let x = req.cookies.user_name
             let resultArray= []
             var cursor = db.collection('notice').find()
             cursor.forEach(function(doc, err){
@@ -35,6 +37,7 @@ function renderNotice(req, res, next){
                         if(val){
                           res.json({
                               data: resultArray,
+                              name: x,
                               logIn:'User is Log in',
                             })
                           next();

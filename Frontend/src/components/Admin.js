@@ -1,5 +1,6 @@
 import React from 'react'
 import Chart from './Chart'
+import {Link} from 'react-router-dom'
 
 class Admin extends React.Component{
 
@@ -17,14 +18,13 @@ class Admin extends React.Component{
 
     fetchUsers(){
 
-        var url = "http://localhost:4000/admin"
+        var url = "/admin"
         fetch(url,{ credentials: 'include'})
         .then(res => res.json())
         .then(res => {
 
             if(res.logIn === ''){
-
-                console.log("MUIE BA")
+                
                 this.props.history.push('/')
             }
             else{
@@ -66,24 +66,13 @@ class Admin extends React.Component{
     }
 
     editUser(id){
-         
-        this.props.history.push(`/admin/edit/${id}`)
-        
-        var url = `http://localhost:4000/admin/edit/${id}`
-        fetch(url,{
-            method: 'PUT',
-            headers: new Headers({'Content-Type': 'application/json'}),
 
-        })
-        .then(res => res.json())
-        .then(data => {
-
-            this.fetchUsers()
-            
-        })
-        .catch(err => console.log(err))
-        
+        this.props.history.push(`admin/edit/${id}`)
     }
+
+
+
+   
 
     
     
@@ -113,7 +102,7 @@ class Admin extends React.Component{
                                         <td>{users.name}</td>
                                         <td>{users.age}</td>
                                         <td>
-                                            <button onClick={()=> this.editUser(users._id)}>Edit</button>
+                                            <Link className="btn" to={`/admin/edit/${users._id}`}>Edit</Link>
                                             <button onClick={()=> this.deleteUser(users._id)}>Delete</button>
                                         </td>
                                     </tr>

@@ -17,7 +17,7 @@ class AddNotice extends React.Component{
 
     addNotice(e){
 
-        let url = `http://localhost:4000/notice/addnotice`
+        let url = `/notice/addnotice`
         fetch(url,{
 
             method: 'POST',

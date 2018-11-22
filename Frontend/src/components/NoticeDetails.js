@@ -18,7 +18,7 @@ class NoticeDetails extends Component{
 
         let id = this.props.match.params.id
         console.log(id)
-        let url = `http://localhost:4000/notice/${id}`
+        let url = `/notice/${id}`
         fetch(url)
         .then(res => res.json())
         .then(res =>{
@@ -38,7 +38,7 @@ class NoticeDetails extends Component{
     deleteNotce(){
 
         let id = this.state.details._id
-        let url = `http://localhost:4000/notice/delete/${id}`
+        let url = `/notice/delete/${id}`
         fetch(url,{
             method: 'DELETE',
             headers: new Headers({'Content-Type': 'application/json'}),

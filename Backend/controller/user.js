@@ -66,6 +66,7 @@ function getLogin(req, res){
 
             res.cookie('user_idd',user._id)
             res.cookie("user_email",user.email)
+            res.cookie('user_name',user.name)
 
             return res.json({
                 status: 'Users Log in',

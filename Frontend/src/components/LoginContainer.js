@@ -19,7 +19,7 @@ class LoginContainer extends React.Component{
 
     getLogin(e){
 
-        let url = `http://localhost:4000/login`
+        let url = `/login`
         fetch(url,{
 
             method: 'POST',

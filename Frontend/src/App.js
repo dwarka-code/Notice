@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import RegisterContainer from './components/RegisterContainer'
-//import Navigation from './components/Navigation'
+import Navigation from './components/Navigation'
 import Admin from './components/Admin'
 import NoticePage from './components/NoticePage'
 import AddNotice from './components/AddNotice'
 import EditNotice from './components/EditNotice'
 import NoticeDetails from './components/NoticeDetails'
 import LoginContainer from './components/LoginContainer'
-
+import EditUser from './components/EditUser'
 
 class App extends Component {
 
@@ -20,11 +20,12 @@ class App extends Component {
  
     return (
 
+     
       <BrowserRouter>
 
       <div>
 
-        
+      <Navigation />
         <Switch>
 
           <Route exact path="/" component={LoginContainer}/>
@@ -34,6 +35,7 @@ class App extends Component {
           <Route exact path="/notice/addnotice" component={AddNotice} />
           <Route exact path="/notice/edit/:id" component={EditNotice} />
           <Route exact path="/notice/:id" component={NoticeDetails} />
+          <Route exact path="/admin/edit/:id" component={EditUser} />
 
         </Switch>
 

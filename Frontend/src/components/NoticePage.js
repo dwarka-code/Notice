@@ -8,7 +8,8 @@ class NoticePage extends React.Component{
         super(props);
         this.state={
 
-            notices: []
+            notices: [],
+            name: ''
         }
 
         this.logOut = this.logOut.bind(this)
@@ -17,7 +18,7 @@ class NoticePage extends React.Component{
 
     logOut(){
 
-        let url = "http://localhost:4000/"
+        let url = "/"
         fetch(url,{
 
             method: 'POST',
@@ -37,18 +38,23 @@ class NoticePage extends React.Component{
     fetchNotice(){
 
         
-        var url = "http://localhost:4000/notice"
+        var url = "/notice"
         fetch(url,{ credentials: 'include'})
         .then(res => res.json())
         .then(res =>{
             if(res.logIn === ''){
 
                 this.props.history.push('/')
+                return false;
             }else{
 
                 this.setState({
               
                     notices: res.data,
+                    name: res.name
+                }, function(){
+
+                    console.log("NAME",this.state.name)
                 })
             }
         })
@@ -74,6 +80,7 @@ class NoticePage extends React.Component{
           
             <div>
                 <button onClick={this.logOut} className="btn blue right" type="submit" >Log out</button>
+                <h4>Hello, {this.state.name}</h4>
                 <h1 className="center">Notice</h1>
                    <ul className="collection">
 

@@ -21,7 +21,7 @@ class RegisterContainer extends React.Component{
 
     addUser(e){
 
-        let url = `http://localhost:4000/register`
+        let url = `/register`
         fetch(url,{
 
             method: 'POST',

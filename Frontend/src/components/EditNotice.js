@@ -22,7 +22,7 @@ class EditNotice extends React.Component{
 
         let id = this.props.match.params.id
         console.log(id)
-        let url = `http://localhost:4000/notice/${id}`
+        let url = `/notice/${id}`
         fetch(url)
         .then(res => res.json())
         .then(res => {
@@ -40,7 +40,7 @@ class EditNotice extends React.Component{
     editNotice(newNotice){
 
         let id = this.props.match.params.id
-        let url = `http://localhost:4000/notice/edit/${id}`
+        let url = `/notice/edit/${id}`
         fetch(url,{
 
             method: 'PUT',

@@ -80,13 +80,12 @@ function deleteUser(req, res){
 function editUser(req, res){
 
     
-    var db = database.db('mydb')
-    db.collection('user').updateOne({_id: ObjectID(req.params.id)}, {$set:{email: req.body.email}}, function(err, rez){
+    db.collection('user').updateOne({_id: ObjectID(req.params.id)}, { $set: {email: req.body.email, name: req.body.name} }, function(err, rez){
 
+        console.log(req.params.id)
         if(err)
             console.log(err)
         else{
-
             return res.json({
 
                 data: rez
