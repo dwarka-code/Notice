@@ -18,17 +18,17 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 
 function renderNotice(req, res, next){
 
-            
-            console.log("NOTICE_PAGE",req.cookies.user_idd)
-            console.log("NOTICE_PAGE",req.cookies.user_name)
-            let x = req.cookies.user_name
             let resultArray= []
-            var cursor = db.collection('notice').find()
+            let x = req.cookies.user_name
+            let y = req.cookies.user_idd
+
+            var cursor = db.collection('notice').find({userid: y})
             cursor.forEach(function(doc, err){
     
                 resultArray.push(doc)
             }, function(){
 
+                console.log("RENDER_NOTICE",resultArray)
                 if(req.cookies.user_idd){
   
                     db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
@@ -73,8 +73,11 @@ function addNotice(req, res){
 
     var item = {
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        userid: req.cookies.user_idd
     }
+
+    console.log("ADD_NOTICE",item)
 
     db.collection('notice').insertOne(item, function(err, result){
 
