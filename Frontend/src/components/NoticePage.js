@@ -1,5 +1,8 @@
 import React from 'react';
 import NoticeItem from './NoticeItem'
+import Navigation from './Navigation'
+import {Link} from 'react-router-dom'
+
 
 class NoticePage extends React.Component{
 
@@ -9,7 +12,9 @@ class NoticePage extends React.Component{
         this.state={
 
             notices: [],
-            name: ''
+            name: '',
+            dates: [],
+            isLogin: true
         }
 
         this.logOut = this.logOut.bind(this)
@@ -51,10 +56,11 @@ class NoticePage extends React.Component{
                 this.setState({
               
                     notices: res.data,
-                    name: res.name
+                    name: res.name,
+                    dates: res.date
                 }, function(){
 
-                    console.log("NAME",this.state.name)
+                    //console.log("NAME",this.state)
                 })
             }
         })
@@ -67,7 +73,6 @@ class NoticePage extends React.Component{
     }
 
     render(){
-
         const noticeItems = this.state.notices.map((notice, i) => {
 
             return(
@@ -79,16 +84,16 @@ class NoticePage extends React.Component{
         return(
           
             <div>
+                <Navigation />
                 <button onClick={this.logOut} className="btn blue right" type="submit" >Log out</button>
                 <h4>Hello, {this.state.name}</h4>
                 <h1 className="center">Notice</h1>
-                   <ul className="collection">
-
-                        {noticeItems}
-                   </ul>
-                   <a href="/notice/addnotice"className="btn-floating btn-large red"><i className="fa fa-plus"></i></a>
-            </div>
+                <Link to={`/notice/addnotice`} className="btn-floating btn-large red" ><i className="fa fa-plus"></i></Link>
+                
+                <ul className="collection">{noticeItems}</ul>
                     
+            </div>
+                          
         )
     }
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from './Navigation'
 
 class AddNotice extends React.Component{
 
@@ -50,11 +51,12 @@ class AddNotice extends React.Component{
 
         return (
             <div>
-
+                <Navigation />
                 <h1 className="center">Add Notice</h1>
                 <form onSubmit={this.addNotice}>                  
                     <input type="text" name="title" onChange={this.handleChange} placeholder="Title"/>
                     <input type="text" name="description" onChange={this.handleChange} placeholder="Description"/>
+                    <input type="date" name="date" onChange={this.handleChange} placeholder="Date"/>
                     <input className="btn" type="submit" value="Add" />
                 </form>
                

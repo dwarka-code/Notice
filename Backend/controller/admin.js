@@ -20,20 +20,27 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 function renderAdmin(req, res, next){
 
             let resultArray = []
-            let age_bigger = 0
-            let age_smaller = 0
+            let age020 = 0
+            let age2040 = 0
+            let age4060 =0
+            let agebigger60=0
             let cursor = db.collection('user').find()
             cursor.forEach(function(doc, err){
 
 
-                if(doc.age > 18)
-                    age_bigger++
-                if(doc.age< 18)
-                    age_smaller++
+                if(doc.age > 0 && doc.age<=20)
+                    age020++
+                if(doc.age> 18 && doc.age<=40)
+                    age2040++
+                if(doc.age> 40 && doc.age<=60)
+                    age4060++
+                 if(doc.age> 60)
+                    agebigger60++
 
                 resultArray.push(doc)
             }, function(){
 
+                console.log("AGE020",age020)
                 if(req.cookies.user_idd){
   
                     db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
@@ -42,8 +49,10 @@ function renderAdmin(req, res, next){
                         if(val){
                           res.json({
                               data: resultArray,
-                              age_bigger: age_bigger,
-                              age_smaller: age_smaller,
+                              age020: age020,
+                              age2040: age2040,
+                              age4060: age4060,
+                              agebigger60: agebigger60,
                               logIn:'User is Log in',
                             })
                           next();

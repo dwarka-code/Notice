@@ -17,10 +17,15 @@ class NoticeItem extends Component{
         return(
 
             <li className="collection-item">
-            <Link to={`/notice/${this.state.item._id}`}>{this.state.item.title}</Link>
+            <div>
+                <h5>
+                    <i class="material-icons">filter_drama</i>
+                    <Link to={`/notice/${this.state.item._id}`}>{this.state.item.title}</Link>
+                </h5>
+            </div>
             </li>
         )
     }
 }
-
+ 
 export default NoticeItem

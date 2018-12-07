@@ -28,17 +28,24 @@ function renderNotice(req, res, next){
                 resultArray.push(doc)
             }, function(){
 
-                console.log("RENDER_NOTICE",resultArray)
+                let cursor2 = []
+                for(let i=0;i<resultArray.length;i++){
+
+                    cursor2.push(resultArray[i].date)
+                }
+                console.log("CURSOR2",cursor2)
                 if(req.cookies.user_idd){
   
                     db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
                     .then((val)=>{
               
                         if(val){
+
                           res.json({
                               data: resultArray,
                               name: x,
                               logIn:'User is Log in',
+                              date: cursor2
                             })
                           next();
                         }
@@ -74,7 +81,8 @@ function addNotice(req, res){
     var item = {
         title: req.body.title,
         description: req.body.description,
-        userid: req.cookies.user_idd
+        userid: req.cookies.user_idd,
+        date: req.body.date
     }
 
     console.log("ADD_NOTICE",item)

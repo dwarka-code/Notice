@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import Navigation from './Navigation'
 
 class NoticeDetails extends Component{
 
@@ -51,7 +52,6 @@ class NoticeDetails extends Component{
         })
         .catch(err => console.log(err))
 
-        //this.props.history.push('/notice')
     }
 
 
@@ -66,12 +66,31 @@ class NoticeDetails extends Component{
         return(
         
         <div>
+            <Navigation />
             <h1 className="center">{this.state.details.title}</h1>
-            <ul className="collection">
-                <li className="collection-item">Title: {this.state.details.title}</li>
-                <li className="collection-item">Description: {this.state.details.description}</li>
+            <ul>
+                <div>
+                    <h4>
+                        <label for="Title">Title</label>
+                        <li>{this.state.details.title}</li>
+                    </h4>
+                </div>
+                <div>
+                    <h4>
+                        <label for="Description">Description</label>
+                        <li size="15">{this.state.details.description}</li>
+                    </h4>
+                </div>
+                
+                <div>
+                    <h4>
+                        <label for="Date">Date</label>
+                        <li>{this.state.details.date}</li>
+                    </h4>
+                </div>
+                
             </ul>
-            <Link className="btn" to={`/notice/edit/${this.state.details._id}`}>Edit</Link>
+            <Link className="btn yellow" to={`/notice/edit/${this.state.details._id}`}>Edit</Link>
             <button onClick={this.deleteNotce} className="btn red right">Delete</button>
         </div>
         )

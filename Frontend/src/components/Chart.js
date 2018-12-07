@@ -8,21 +8,23 @@ class Chart extends React.Component{
         return(
 
         <div>
-            <h1>{this.props.age1}</h1>
-            <h1>{this.props.age2}</h1>
           <Pie
                 data={
-                    {labels: ['>18', '<18'],
+                    {labels: ['>0<20', '>20<40','>40<60', '>60'],
                     datasets:[{
                         label: 'Population',
                         data:[
-                            this.props.age1,
-                            this.props.age2
+                            this.props.age020,
+                            this.props.age2040,
+                            this.props.age4060,
+                            this.props.agebigger60
                             
                         ],
                         backgroundColor:[
                             'rgba(255, 99, 132, 0.6)',
-                            'rgba(54, 162, 235, 0.6)'
+                            'rgba(24, 19, 45, 0.6)',
+                            'rgba(78, 45, 235, 0.6)',
+                            'rgba(14, 145, 135, 0.6)'
                         ]
                     }]
                 }

@@ -1,5 +1,8 @@
 import React from "react";
 
+import 'react-toastify/dist/ReactToastify.min.css' 
+import {ToastContainer, toast} from 'react-toastify'
+
 
 class LoginContainer extends React.Component{
 
@@ -41,7 +44,8 @@ class LoginContainer extends React.Component{
                 if(user.email === ''){
                     
                     console.log(user)
-                    this.setState({message: "Email or password is wrong"})
+                    //this.setState({message: "Email or password is wrong"})
+                    toast.error("Email or password is wrong")
                 }
                 else{
 
@@ -66,6 +70,7 @@ class LoginContainer extends React.Component{
 
         return (
             <div>
+                <ToastContainer removeCloseButton="true" hideProgressBar = "false" position="top-center" store={toast}/>
                 <h5 className="center red">{this.state.message}</h5>
                 <h1 className="center">Login</h1>
                 <form onSubmit={this.getLogin}>

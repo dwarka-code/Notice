@@ -1,8 +1,13 @@
-import React from 'react'
+import React ,{Component} from 'react'
 import Chart from './Chart'
-import {Link} from 'react-router-dom'
+import Navigation from './Navigation'
 
-class Admin extends React.Component{
+import 'react-toastify/dist/ReactToastify.min.css' 
+import {ToastContainer, toast} from 'react-toastify'
+
+
+
+class Admin extends Component{
 
     constructor(){
 
@@ -10,9 +15,13 @@ class Admin extends React.Component{
         this.state={
 
             users: [],
-            age_bigger: 0,
-            age_smaller: 0
+            age020: 0,
+            age2040: 0,
+            age4060: 0,
+            agebigger60: 0
         }
+
+        this.deleteUser = this.deleteUser.bind(this)
         
     }
 
@@ -32,15 +41,17 @@ class Admin extends React.Component{
                 this.setState({
 
                     users: res.data,
-                    age_bigger: res.age_bigger,
-                    age_smaller: res.age_smaller
+                    age020: res.age020,
+                    age2040: res.age2040,
+                    age4060: res.age4060,
+                    agebigger60: res.agebigger60
     
                 })
             }
         })
         .then(()=>{
 
-            console.log(this.state)
+            console.log("STATE",this.state)
         })
     }
 
@@ -51,7 +62,7 @@ class Admin extends React.Component{
 
     deleteUser(id){
 
-        var url = `http://localhost:4000/admin/delete/${id}`
+        let url = `/admin/delete/${id}`
         fetch(url,{
             method: 'DELETE',
             headers: new Headers({'Content-Type': 'application/json'}),
@@ -60,31 +71,18 @@ class Admin extends React.Component{
         .then(res => res.json())
         .then(data => {
 
+            toast.error("User Deleted")
             this.fetchUsers()
         })
         .catch(err => console.log(err))
-    }
-
-    editUser(id){
-
-        this.props.history.push(`admin/edit/${id}`)
-    }
-
-
-
-   
-
-    
-    
+    }  
     render(){
 
     
         return (            
 
-            <div>
-                <h5>Numarul personalelor cu varsta peste 18 ani: {this.state.age_bigger}</h5>
-                <h5>Numarul personalelor cu varsta sub 18 ani: {this.state.age_smaller}</h5>
-            
+            <div className="">
+            <Navigation />  
                     <table>
                         <thead>
                             <tr>
@@ -102,7 +100,6 @@ class Admin extends React.Component{
                                         <td>{users.name}</td>
                                         <td>{users.age}</td>
                                         <td>
-                                            <Link className="btn" to={`/admin/edit/${users._id}`}>Edit</Link>
                                             <button onClick={()=> this.deleteUser(users._id)}>Delete</button>
                                         </td>
                                     </tr>
@@ -110,8 +107,9 @@ class Admin extends React.Component{
                             })}
                         </tbody>     
                     </table>
-                    <Chart age1={this.state.age_bigger} age2={this.state.age_smaller}/>
-                    </div>
+                    <Chart age020={this.state.age020} age2040={this.state.age2040} age4060={this.state.age4060} agebigger60={this.state.agebigger60}/>
+                    <ToastContainer removeCloseButton="true" hideProgressBar = "false" position="bottom-center" store={toast}/> 
+            </div>
                         
                         
             

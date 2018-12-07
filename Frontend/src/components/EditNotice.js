@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from './Navigation'
 
 class EditNotice extends React.Component{
 
@@ -9,7 +10,8 @@ class EditNotice extends React.Component{
 
             id: '',
             title: '',
-            description: ''
+            description: '',
+            date: ''
 
         }
 
@@ -31,7 +33,8 @@ class EditNotice extends React.Component{
 
                 id: res.data._id,
                 title: res.data.title,
-                description: res.data.description
+                description: res.data.description,
+                date: res.data.date
             })
         })
         .catch(err => console.log(err))
@@ -91,13 +94,32 @@ class EditNotice extends React.Component{
         return (
             <div>
 
+               <Navigation />
                <h1 className="center">Edit Notice</h1>
+               
                <form onSubmit={this.onSubmit}>
 
+                    <div>
+                        <h4>
+                            <label for="Title">Title</label>
+                            <input type="text" name="title" ref="title" value={this.state.title} onChange={this.handleInput}/>
+                        </h4>     
+                    </div>
+                    <div>
+                        <h4>
+                        <label for="Description">Description</label>
+                    <input type="text" name="description" ref="description" value={this.state.description} onChange={this.handleInput}/>
+                        </h4>
+                    </div>
+                    <div>
+                        <h4>
+                        <label for="Date">Date</label>
+                    <input type="text" name="date" ref="date" value={this.state.date} onChange={this.handleInput} />
+                        </h4>
+                    </div>
                     
-                    <input type="text" name="title" ref="title" value={this.state.title} onChange={this.handleInput}  placeholder="Title"/>
-                    <input type="text" name="description" ref="description" value={this.state.description} onChange={this.handleInput} placeholder="Description"/>
-                    <button className="btn green" type="submit">Edit</button>
+                    
+                    <button className="btn yellow" type="submit">Edit</button>
                     
                </form>
             </div>
