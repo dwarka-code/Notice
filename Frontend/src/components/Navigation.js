@@ -1,29 +1,30 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {Row, Col} from 'react-bootstrap'
+
+import '../style/Navigation.css'
+
+//import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Row, Col} from 'react-bootstrap'
 
 class Navigation extends React.Component{
 
     render(){
 
         return(
+            <Row>
+                <Col xs={12} md={12}>
+                    <nav className="list">
+                        <ul>
+                            <li className="logo"><h4>Logo</h4></li>
+                            <li><Link to="/task">Tasks</Link></li>
+                            <li><Link to="/register">Register</Link></li>
+                            <li><Link to="/">Login</Link></li>    
+                        </ul>
+                    </nav>
+                </Col>
+            </Row>
 
-            <div>
-
-                <nav className="blue darken-3">
-                    <div className="nav-wrapper">
-                    <div className="brand-logo">Logo</div>
-                    <ul id="nav-mobile" className="right hide-on-med-and-down">
-                        <Link className="btn blue" to={`/`}>Home</Link>
-                        <Link className="btn blue" to={`/register`}>Register</Link>
-                        <Link className="btn blue" to={`/notice`}>Notice</Link>
-                    </ul>
-                    </div>
-                </nav>
-
-            </div>
         )
     }
 }
-//in loc de href trebuie sa pun un onClick care sa imi spuna daca e login sau nu si dupa dau un return false;
-
 export default Navigation

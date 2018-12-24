@@ -1,4 +1,7 @@
 import React from "react";
+import {Button, FormGroup, ControlLabel, FormControl, Grid, Row,Col} from 'react-bootstrap'
+
+import '../style/Register.css'
 
 class RegisterContainer extends React.Component{
 
@@ -12,10 +15,12 @@ class RegisterContainer extends React.Component{
             name: '',
             age:'',
             message:''
+
         }
 
         this.addUser = this.addUser.bind(this)
         this.handleEvent = this.handleEvent.bind(this)
+        this.handleChange=this.handleChange.bind(this)
     }
 
     addUser(e){
@@ -51,67 +56,141 @@ class RegisterContainer extends React.Component{
         const {name, value} = e.target;
         this.setState({
 
-            [name]: value
+            [name]: value,
         })
     }
+
+    handleChange(e){
+
+        this.setState({
+
+            password: e.target.value
+        })
+    }
+
+    getValidationState() {
+        const length = this.state.password.length;
+        if (length > 10)
+            return 'success';
+        else if (length > 5)
+            return 'warning';
+        else if (length > 0)
+            return 'error';
+        return null;
+      }
     render(){
 
         return (
-
-            /*<div>
-             <h5 className="center red">{this.state.message}</h5>
-             <h1 className="center">Register</h1>
-               <form onSubmit={this.addUser}>
-
-                    
-                    <input type="text" name="email" value={this.state.email} onChange={this.handleEvent} placeholder="Email"/>
-                    <input type="text" name="password" value={this.state.password}onChange={this.handleEvent} placeholder="Password"/>
-                    <input type="text" name="name" value={this.state.name} onChange={this.handleEvent} placeholder="Name"/>
-                    <input type="text" name="age" value={this.state.age} onChange={this.handleEvent} placeholder="Age"/>
-                    <input type="file" name="myImage"/>
-                    <button className="btn blue" type="submit" >Register</button>
-                    
-               </form>
-            </div> */
-
-            <div>
-                <h5 className="center red">{this.state.message}</h5>
-                <h1 className="center">Register</h1>
-                <div className="row">
-                    <form className="col s12" onSubmit={this.addUser}>
-
-                    <div className="row">
-                        <div class="input-field col s5">
-                            <input name="name" value={this.state.name} onChange={this.handleEvent} type="text" className="validate" />
-                            <label for="Name">Name</label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div class="input-field col s5">
-                            <input name="age" value={this.state.age} onChange={this.handleEvent} type="number" class="validate" />
-                            <label for="Age">Age</label>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div class="input-field col s5">
-                            <input name="email" value={this.state.email} onChange={this.handleEvent} type="text" class="validate" />
-                            <label for="Email">Email</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                         <div class="input-field col s5">
-                            <input name="password" value={this.state.password}onChange={this.handleEvent} type="password" class="validate" />
-                                <label for="password">Password</label>
-                         </div>
-                    </div>
-                    <button className="btn blue" type="submit" >Register</button>
-                    </form>
-                
-                </div>
-            </div>
                         
+            <div className="container">
 
+                <div className="error_message">
+                    <h5>{this.state.message}</h5>
+                </div>
+                <div className="title">
+                    <h1>Register</h1>
+                </div>
+                <div className="formm">
+                    <form onSubmit={this.addUser}>
+                        <Grid>
+                            <div className="space">
+                                <Row>
+                                    <Col xs={12} md={12}>
+                                    <Row>
+                                        <Col xs={12}>
+                                            <i className="fas fa-user"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Name</ControlLabel>
+                                     
+                                    </Col>
+                                    </Row>
+                                        <FormControl
+                                            type="text"
+                                            name="name"
+                                            value={this.state.name}
+                                            placeholder="Name"
+                                            onChange={this.handleEvent}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="space">                               
+                                <Row>
+                                    <Col xs={12} md={12}>
+                                    <Row>
+                                        <Col xs={12}>
+                                            <i className="fas fa-user"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Age</ControlLabel>
+                                     
+                                    </Col>
+                                    </Row>
+                                        <FormControl
+                                            type="number"
+                                            name="age"
+                                            value={this.state.age}
+                                            placeholder="Age"
+                                            onChange={this.handleEvent}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="space">
+                                <Row>
+                                    <Col xs={12} md={12}>
+                                    <Row>
+                                        <Col xs={12}>
+                                            <i class="far fa-envelope"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Email</ControlLabel>
+                                     
+                                    </Col>
+                                    </Row>
+                                        <FormControl
+                                            type="email"
+                                            name="email"
+                                            value={this.state.email}
+                                            placeholder="Email"
+                                            onChange={this.handleEvent}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="space">
+                                <FormGroup
+                                    controlId="formBasicText"
+                                    validationState={this.getValidationState()}
+                                >
+                                    <Row>
+                                        <Col xs={12} md={12} >
+                                        <Row>
+                                        <Col xs={12}>
+                                            <i class="fas fa-unlock-alt"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Password</ControlLabel>
+                                     
+                                    </Col>
+                                            </Row>
+                                            <FormControl
+                                                type="password"
+                                                name="password"
+                                                value={this.state.password}
+                                                placeholder="Password"
+                                                onChange={this.handleEvent}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                            </div>
+                        </Grid>
+                        <FormControl.Feedback />
+                        <div className="register_button">
+                            <Button bsStyle="primary" type="submit">Register</Button>
+                        </div>
+                    </form>
+                </div>
+                     
+        </div>     
         )
     }
 }

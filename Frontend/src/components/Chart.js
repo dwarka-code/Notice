@@ -12,7 +12,6 @@ class Chart extends React.Component{
                 data={
                     {labels: ['>0<20', '>20<40','>40<60', '>60'],
                     datasets:[{
-                        label: 'Population',
                         data:[
                             this.props.age020,
                             this.props.age2040,
@@ -29,9 +28,11 @@ class Chart extends React.Component{
                     }]
                 }
                 }
-                width={180}
-                height={40}
+                width={100}
+                height={25}
           />
+
+
         </div>
         )
     }

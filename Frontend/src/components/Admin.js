@@ -6,6 +6,9 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import {ToastContainer, toast} from 'react-toastify'
 
 
+import {Table,Button, Col, Row} from 'react-bootstrap'
+
+
 
 class Admin extends Component{
 
@@ -78,37 +81,46 @@ class Admin extends Component{
     }  
     render(){
 
-    
+
+        
         return (            
 
-            <div className="">
-            <Navigation />  
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.users.map(users =>{
-
-                                return(
-                                    <tr key={users._id}>
-                                        <td>{users.email}</td>
-                                        <td>{users.name}</td>
-                                        <td>{users.age}</td>
-                                        <td>
-                                            <button onClick={()=> this.deleteUser(users._id)}>Delete</button>
-                                        </td>
+            <div>
+                <Navigation />
+                <div className="">
+                    <Row>
+                        <Col xs={12} md={12}>
+                            <Table responsive={true} hover={true}> 
+                                <thead>
+                                    <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Email</th>
                                     </tr>
-                                )
-                            })}
-                        </tbody>     
-                    </table>
-                    <Chart age020={this.state.age020} age2040={this.state.age2040} age4060={this.state.age4060} agebigger60={this.state.agebigger60}/>
-                    <ToastContainer removeCloseButton="true" hideProgressBar = "false" position="bottom-center" store={toast}/> 
+                                </thead>
+                                <tbody>
+                                    {this.state.users.map((users,i) =>{
+
+                                        return(
+                                            <tr key={users._id}>
+                                                <td>{i+1}</td>
+                                                <td>{users.name}</td>
+                                                <td>{users.age}</td>
+                                                <td>{users.email}</td>
+                                                <td><Button bsStyle="danger" onClick={()=> this.deleteUser(users._id)}>Delete</Button></td>
+                                            </tr>
+                                        )
+                                    })}
+                                    
+                                </tbody>
+                            </Table>
+                                    
+                            <Chart age020={this.state.age020} age2040={this.state.age2040} age4060={this.state.age4060} agebigger60={this.state.agebigger60}/>
+                            <ToastContainer removeCloseButton="true" position="bottom-center" store={toast}/> 
+                        </Col>
+                    </Row>
+                </div>
             </div>
                         
                         
