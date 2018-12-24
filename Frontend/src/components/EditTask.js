@@ -1,5 +1,7 @@
 import React from "react";
 import Navigation from './Navigation'
+import {Row, Col, Grid, ControlLabel, FormControl, Button} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 class EditTask extends React.Component{
 
@@ -93,36 +95,89 @@ class EditTask extends React.Component{
 
         return (
             <div>
+            <Navigation />
+            <div className="container">
 
-               <Navigation />
-               <h1 className="center">Edit Task</h1>
-               
-               <form onSubmit={this.onSubmit}>
-
-                    <div>
-                        <h4>
-                            <label for="Title">Title</label>
-                            <input type="text" name="title" ref="title" value={this.state.title} onChange={this.handleInput}/>
-                        </h4>     
-                    </div>
-                    <div>
-                        <h4>
-                        <label for="Description">Description</label>
-                    <input type="text" name="description" ref="description" value={this.state.description} onChange={this.handleInput}/>
-                        </h4>
-                    </div>
-                    <div>
-                        <h4>
-                        <label for="Date">Date</label>
-                    <input type="text" name="date" ref="date" value={this.state.date} onChange={this.handleInput} />
-                        </h4>
-                    </div>
-                    
-                    
-                    <button className="btn yellow" type="submit">Edit</button>
-                    
-               </form>
-            </div>
+                <div className="title">
+                    <h1>Edit Task</h1>
+                </div>
+                <div className="formm">
+                    <form onSubmit={this.onSubmit}>
+                        <Grid>
+                        <div className="space">
+                                <Row>
+                                    <Col xs={12} md={12}>
+                                    <Row>
+                                        <Col xs={12}>
+                                            <i className="far fa-envelope"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Title</ControlLabel>
+                                    
+                                        </Col>
+                                    </Row>
+                                        <FormControl
+                                            type="text"
+                                            name="title"
+                                            ref="title"
+                                            value={this.state.title}
+                                            placeholder="Title"
+                                            onChange={this.handleInput}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="space">
+                                    <Row>
+                                        <Col xs={12} md={12} >
+                                        <Row>
+                                        <Col xs={12}>
+                                            <i className="fas fa-unlock-alt"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Description</ControlLabel>
+                                    
+                                    </Col>
+                                            </Row>
+                                            <FormControl
+                                                type="text"
+                                                name="description"
+                                                ref="description"
+                                                value={this.state.description}
+                                                placeholder="Description"
+                                                onChange={this.handleInput}
+                                            />
+                                        </Col>
+                                    </Row>
+                            </div>
+                            <div className="space">
+                                    <Row>
+                                        <Col xs={12} md={12} >
+                                        <Row>
+                                        <Col xs={12}>
+                                            <i className="fas fa-unlock-alt"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Date</ControlLabel>
+                                    
+                                    </Col>
+                                            </Row>
+                                            <FormControl
+                                                type="date"
+                                                name="date"
+                                                ref="date"
+                                                value={this.state.date}
+                                                placeholder="Date"
+                                                onChange={this.handleInput}
+                                            />
+                                        </Col>
+                                    </Row>
+                            </div>                                
+                        </Grid>
+                        <div className="login_button">
+                            <Button bsStyle="primary" bsSize="large" type="submit">Add</Button>
+                        </div>
+                    </form>
+                </div>
+            </div>              
+        </div>
         )
     }
 }
