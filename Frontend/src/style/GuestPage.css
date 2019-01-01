@@ -1,0 +1,12 @@
+.logout_button{
+  text-align: right;
+  padding: 10px;
+}
+
+.circle{
+
+    height: 70px;
+    width: 70px;
+    background-color: #bbb;
+    border-radius: 50%;
+  }

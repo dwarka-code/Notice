@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import RegisterContainer from './components/RegisterContainer'
-import Navigation from './components/Navigation'
 import Admin from './components/Admin'
-import NoticePage from './components/NoticePage'
-import AddNotice from './components/AddNotice'
-import EditNotice from './components/EditNotice'
-import NoticeDetails from './components/NoticeDetails'
+import TaskPage from './components/TaskPage'
+import AddTask from './components/AddTask'
+import EditTask from './components/EditTask'
 import LoginContainer from './components/LoginContainer'
-import EditUser from './components/EditUser'
+import GuestsPage from './components/GuestsPage'
+import AddGuest from './components/AddGuest'
 
 class App extends Component {
 
@@ -23,24 +22,23 @@ class App extends Component {
      
       <BrowserRouter>
 
-      <div>
+        <div style={{height: '100%'}}>
 
-      <Navigation />
-        <Switch>
+          <Switch>
 
-          <Route exact path="/" component={LoginContainer}/>
-          <Route exact path="/register" component={RegisterContainer}/>
-          <Route exact path="/admin" component={Admin}/>
-          <Route exact path="/notice" component={NoticePage} />
-          <Route exact path="/notice/addnotice" component={AddNotice} />
-          <Route exact path="/notice/edit/:id" component={EditNotice} />
-          <Route exact path="/notice/:id" component={NoticeDetails} />
-          <Route exact path="/admin/edit/:id" component={EditUser} />
+            <Route exact path="/" component={LoginContainer}/>
+            <Route exact path="/register" component={RegisterContainer}/>
+            <Route exact path="/admin" component={Admin}/>
+            <Route exact path="/task" component={TaskPage} />
+            <Route exact path="/guests" component={GuestsPage} />
+            <Route exact path="/guests/addguest" component={AddGuest} />
+            <Route exact path="/task/addtask" component={AddTask} />
+            <Route exact path="/task/edit/:id" component={EditTask} />
 
-        </Switch>
+          </Switch>
 
 
-      </div>
+        </div>
 
       </BrowserRouter>
     )

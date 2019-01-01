@@ -83,7 +83,6 @@ class RegisterContainer extends React.Component{
         return (
                         
             <div className="container">
-
                 <div className="error_message">
                     <h5>{this.state.message}</h5>
                 </div>
@@ -140,7 +139,7 @@ class RegisterContainer extends React.Component{
                                     <Col xs={12} md={12}>
                                     <Row>
                                         <Col xs={12}>
-                                            <i class="far fa-envelope"></i>
+                                            <i className="far fa-envelope"></i>
                                             &nbsp; &nbsp;
                                         <ControlLabel>Email</ControlLabel>
                                      
@@ -165,7 +164,7 @@ class RegisterContainer extends React.Component{
                                         <Col xs={12} md={12} >
                                         <Row>
                                         <Col xs={12}>
-                                            <i class="fas fa-unlock-alt"></i>
+                                            <i className="fas fa-unlock-alt"></i>
                                             &nbsp; &nbsp;
                                         <ControlLabel>Password</ControlLabel>
                                      
@@ -189,7 +188,7 @@ class RegisterContainer extends React.Component{
                         </div>
                     </form>
                 </div>
-                     
+                
         </div>     
         )
     }

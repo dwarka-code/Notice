@@ -3,13 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "file:node_modules/@material-ui/core",
+    "chart.js": "^2.7.3",
     "contentful": "^7.0.4",
-    "material-ui": "^0.20.2",
+    "dateformat": "^3.0.3",
+    "jquery": "^3.3.1",
+    "rc-time-picker": "^3.5.0",
     "react": "^16.5.2",
+    "react-bootstrap": "^0.32.4",
+    "react-calendar": "^2.17.5",
+    "react-chartjs-2": "^2.7.4",
+    "react-datepicker": "^2.0.0",
+    "react-day-picker": "^7.2.4",
     "react-dom": "^16.5.2",
+    "react-draggable": "^3.1.1",
+    "react-form": "^3.5.6",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.4"
+    "react-scripts": "2.0.4",
+    "react-scrollbar": "^0.5.4",
+    "react-shapes": "^0.1.0",
+    "react-sidebar": "^3.0.2",
+    "react-time-picker": "^3.1.1",
+    "react-toastify": "^4.4.3",
+    "react-toasts": "^2.0.14"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,5 +40,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "http://localhost:4000"
 }

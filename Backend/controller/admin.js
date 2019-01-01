@@ -40,7 +40,6 @@ function renderAdmin(req, res, next){
                 resultArray.push(doc)
             }, function(){
 
-                console.log("AGE020",age020)
                 if(req.cookies.user_idd){
   
                     db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
@@ -91,7 +90,6 @@ function editUser(req, res){
     
     db.collection('user').updateOne({_id: ObjectID(req.params.id)}, { $set: {email: req.body.email, name: req.body.name} }, function(err, rez){
 
-        console.log(req.params.id)
         if(err)
             console.log(err)
         else{

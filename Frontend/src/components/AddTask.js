@@ -1,7 +1,11 @@
 import React from "react";
 import Navigation from './Navigation'
 import {Row, Col, Grid, ControlLabel, FormControl, Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import TimePicker from 'react-time-picker';
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 class AddTask extends React.Component{
 
@@ -12,11 +16,14 @@ class AddTask extends React.Component{
 
             title: '',
             description: '',
-            date: ''
+            date: new Date(),
+            time: undefined
         }
 
         this.addTask = this.addTask.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.dateChange = this.dateChange.bind(this)
+        this.timeChange = this.timeChange.bind(this)
     }
 
     addTask(e){
@@ -46,6 +53,19 @@ class AddTask extends React.Component{
         this.setState({
 
             [name]: value
+        })
+    }
+
+    timeChange(timp){
+
+        this.setState({time:timp})
+    }
+
+    dateChange(dataa){
+
+        this.setState({
+
+            date: dataa
         })
     }
 
@@ -80,6 +100,7 @@ class AddTask extends React.Component{
                                                 value={this.state.title}
                                                 placeholder="Title"
                                                 onChange={this.handleChange}
+                                                required
                                             />
                                         </Col>
                                     </Row>
@@ -101,7 +122,29 @@ class AddTask extends React.Component{
                                                     value={this.state.description}
                                                     placeholder="Description"
                                                     onChange={this.handleChange}
+                                                    required
                                                 />
+                                            </Col>
+                                        </Row>
+                                </div>
+                                <div className="space">
+                                        <Row>
+                                            <Col xs={12} md={12} >
+                                                <Row>
+                                                    <Col xs={12} md={12}>
+                                                        <i className="fas fa-calendar-alt"></i>
+                                                        &nbsp; &nbsp;
+                                                    <ControlLabel>Date</ControlLabel>
+                                                    
+                                                    </Col>
+                                                        <DatePicker
+                                                            selected={this.state.date}
+                                                            onChange={this.dateChange}
+                                                            required
+                                                            
+                                                        />
+                                                </Row>
+
                                             </Col>
                                         </Row>
                                 </div>
@@ -110,18 +153,17 @@ class AddTask extends React.Component{
                                             <Col xs={12} md={12} >
                                             <Row>
                                             <Col xs={12}>
-                                                <i className="fas fa-unlock-alt"></i>
+                                                <i className="fas fa-clock"></i>
                                                 &nbsp; &nbsp;
-                                            <ControlLabel>Date</ControlLabel>
+                                            <ControlLabel>Time</ControlLabel>
                                         
                                         </Col>
                                                 </Row>
-                                                <FormControl
-                                                    type="date"
-                                                    name="date"
-                                                    value={this.state.date}
-                                                    placeholder="Date"
-                                                    onChange={this.handleChange}
+                                                <TimePicker
+                                                    name="time"
+                                                    onChange={this.timeChange}
+                                                    value={this.state.time}
+                                                    required 
                                                 />
                                             </Col>
                                         </Row>

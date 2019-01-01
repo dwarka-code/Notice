@@ -147,7 +147,7 @@ class LoginContainer extends React.Component{
                             </div>                   
                         </Grid>
                         <div className="login_button">
-                            <Button bsStyle="primary" bsSize="large" type="submit">Log in</Button>
+                            <Button bsStyle="success" bsSize="large" type="submit">Log in</Button>
                         </div>
                     </form>
                 </div>

@@ -9,11 +9,12 @@ var app = express();
 
 const user = require('./controller/user.js')
 const admin = require('./controller/admin.js')
-const notice = require('./controller/notice.js')
+const task = require('./controller/task.js')
+const guest = require('./controller/guest.js')
 
 
 //username: lrs
-//password: cs23lrs
+//password: cs23lrstask
 
 const url = 'mongodb://lrs:cs23lrs@ds111063.mlab.com:11063/mydb'
 
@@ -46,13 +47,19 @@ app.put('/admin/edit/:id',admin.editUser)
 app.delete('/admin/delete/:id',admin.deleteUser)
 
 
-//Notice
-app.get('/notice',cors(corsOptions),notice.renderNotice)
-app.get('/notice/:id',cors(corsOptions),notice.renderNoticeDetails)
-app.put('/notice/edit/:id',cors(corsOptions),notice.editNotice)
-app.post('/notice/addnotice',cors(corsOptions),notice.addNotice)
-app.delete('/notice/delete/:id', cors(corsOptions),notice.deleteNotice)
-app.post('/',cors(corsOptions), notice.logOut)
+//Tasks
+app.get('/task',cors(corsOptions),task.renderTasks)
+app.get('/task/:id',cors(corsOptions),task.renderTaskDetails)
+app.put('/task/edit/:id',cors(corsOptions),task.editTask)
+app.post('/task/addtask',cors(corsOptions),task.addTask)
+app.delete('/task/delete/:id', cors(corsOptions),task.deleteTask)
+app.post('/',cors(corsOptions), task.logOut)
+
+//Guests
+app.get('/guests', cors(corsOptions), guest.renderGuests)
+app.post('/guests/addguest',cors(corsOptions),guest.addGuest)
+
+
 
 
    

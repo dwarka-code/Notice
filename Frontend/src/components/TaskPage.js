@@ -19,7 +19,7 @@ class TaskPage extends React.Component{
             lungime: 0,
             message: '',
             isLogin: true,
-            status: '',
+            isVisible: false
         }
 
         this.logOut = this.logOut.bind(this)
@@ -34,13 +34,12 @@ class TaskPage extends React.Component{
 
             method: 'POST',
             credentials: 'include',
-            body: JSON.stringify(this.state),
+            body: JSON.stringify(),
             headers: new Headers({'Content-Type': 'application/json'})
         },{ credentials: 'include'})
         .then(res => res.json())
         .then(res =>{
 
-            console.log(res.status)
             this.props.history.push('/')
         })
     }
@@ -67,16 +66,16 @@ class TaskPage extends React.Component{
                     message: ''
                 }, function(){
                     
-                    console.log("STATE",this.state)
                 })
-                console.log("LUNGIME:",this.state.lungime)
                 if(this.state.lungime === 0){
 
-                    this.setState({message: "Not tasks"})
+                    this.setState({
+                        message: "No tasks",
+                        isVisible: true
+                    })
 
 
                 }
-                console.log("MESSAGE:",this.state.message)
             }
         })
     }
@@ -107,14 +106,26 @@ class TaskPage extends React.Component{
 
     editNotice(id){
 
-        console.log(id)
         this.props.history.push(`/task/edit/${id}`)
+    }
+
+    toggleButton(){
+
+        console.log(this.state.tasks.length)
+        if(this.state.tasks.length === 0){
+
+            this.setState({
+
+                isVisible: false
+            })
+        }
     }
 
     render(){
         return(
           
             <div>
+                
                 <Navigation/>
                     <div>
                         <div className="logout_button">
@@ -127,14 +138,11 @@ class TaskPage extends React.Component{
                             <div className="task">
                                 <h1>Task</h1>
                             </div>
-                            <div className="notask">
-                                <h3>{this.state.message}</h3>
-                            </div>
 
                             <div className="addtask">
                                 <Link to={`/task/addtask`}><i className="fas fa-plus"></i></Link>
                             </div>
-                            <div >
+                            {!this.state.isVisible && <div >
                                     <Row>
                                         <Col xs={12} md={12}>
                                             <Table responsive={true} hover={true}> 
@@ -144,31 +152,37 @@ class TaskPage extends React.Component{
                                                     <th>Title</th>
                                                     <th>Description</th>
                                                     <th>Date</th>
+                                                    <th>Time</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {this.state.tasks.map((tasks,i) =>{
 
                                                         return(
-                                                            <tr key={tasks._id}>
-                                                                <td>{i+1}</td>
-                                                                <td>{tasks.title}</td>
-                                                                <td>{tasks.description}</td>
-                                                                <td>{tasks.date}</td>
-                                                                <td><Button onClick={()=> this.deleteTask(tasks._id)} bsStyle="danger">Delete</Button></td>
-                                                                <td><Button onClick={()=> this.editNotice(tasks._id)} bsStyle="warning">Edit</Button></td>
-                                                                
-                                                            </tr>
+                                                                <tr key={tasks._id}>
+                                                                    <td>{i+1}</td>
+                                                                    <td>{tasks.title}</td>
+                                                                    <td>{tasks.description}</td>
+                                                                    <td>{tasks.date}</td>
+                                                                    <td>{tasks.time}</td>
+                                                                    <td><Button onClick={()=> this.deleteTask(tasks._id)} bsStyle="danger">Delete <i className="fas fa-trash-alt"></i></Button></td>
+                                                                    <td><Button onClick={()=> this.editNotice(tasks._id)} bsStyle="warning">Edit <i className="fas fa-edit"></i></Button></td>
+                                                                </tr>
                                                         )
                                                     })}
                                                     
                                                 </tbody>
-                                            </Table>                                                                                         
+                                            </Table>
+                                            <ToastContainer removeCloseButton="true" position="bottom-center" store={toast}/>                                                                                         
                                         </Col>
                                     </Row>
-                            </div>
+                            </div>}
                         </div>
-                    </div>                       
+                    </div>
+                    <div className="notask">
+                        {this.state.isVisible && <h3>{this.state.message}</h3>}
+                    </div> 
+                                       
             </div>
                           
         )

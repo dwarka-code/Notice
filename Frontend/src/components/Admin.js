@@ -108,7 +108,7 @@ class Admin extends Component{
                                                 <td>{users.name}</td>
                                                 <td>{users.age}</td>
                                                 <td>{users.email}</td>
-                                                <td><Button bsStyle="danger" onClick={()=> this.deleteUser(users._id)}>Delete</Button></td>
+                                                <td><Button bsStyle="danger" onClick={()=> this.deleteUser(users._id)}>Delete <i className="fas fa-trash-alt"></i></Button></td>
                                             </tr>
                                         )
                                     })}

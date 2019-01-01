@@ -1,7 +1,11 @@
 import React from "react";
 import Navigation from './Navigation'
 import {Row, Col, Grid, ControlLabel, FormControl, Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import TimePicker from 'react-time-picker';
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 class EditTask extends React.Component{
 
@@ -13,30 +17,34 @@ class EditTask extends React.Component{
             id: '',
             title: '',
             description: '',
-            date: ''
+            date: new Date(),
+            time: ''
 
         }
 
         this.editTask = this.editTask.bind(this)
         this.handleInput = this.handleInput.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.dateChange = this.dateChange.bind(this)
+        this.timeChange = this.timeChange.bind(this)
     }
 
     fetchTask(){
 
         let id = this.props.match.params.id
-        console.log(id)
         let url = `/task/${id}`
         fetch(url)
         .then(res => res.json())
         .then(res => {
 
+            console.log("MUIEEEEE",res.data.date)
             this.setState({
 
                 id: res.data._id,
                 title: res.data.title,
                 description: res.data.description,
-                date: res.data.date
+                date: res.data.date,
+                time: res.data.time
             })
         })
         .catch(err => console.log(err))
@@ -78,7 +86,10 @@ class EditTask extends React.Component{
         const newTask={
 
             title: this.refs.title.value,
-            description: this.refs.description.value
+            description: this.refs.description.value,
+            date: this.refs.date.value,
+            time: this.refs.time.value
+
         }
 
         this.editTask(newTask)
@@ -89,6 +100,19 @@ class EditTask extends React.Component{
     componentDidMount(){
 
         this.fetchTask()
+    }
+
+    timeChange(timp){
+
+        this.setState({time:timp})
+    }
+
+    dateChange(dataa){
+
+        this.setState({
+
+            date: dataa
+        })
     }
 
     render(){
@@ -153,26 +177,44 @@ class EditTask extends React.Component{
                                         <Col xs={12} md={12} >
                                         <Row>
                                         <Col xs={12}>
-                                            <i className="fas fa-unlock-alt"></i>
+                                            <i className="fas fa-calendar-alt"></i>
                                             &nbsp; &nbsp;
                                         <ControlLabel>Date</ControlLabel>
                                     
                                     </Col>
                                             </Row>
-                                            <FormControl
-                                                type="date"
-                                                name="date"
+                                            <DatePicker
                                                 ref="date"
-                                                value={this.state.date}
-                                                placeholder="Date"
-                                                onChange={this.handleInput}
+                                                selected={this.state.date}
+                                                onChange={this.dateChange}
+                                                            
+                                            />
+                                        </Col>
+                                    </Row>
+                            </div>
+                            <div className="space">
+                                    <Row>
+                                        <Col xs={12} md={12} >
+                                        <Row>
+                                        <Col xs={12}>
+                                        <i className="fas fa-clock"></i>
+                                            &nbsp; &nbsp;
+                                        <ControlLabel>Time</ControlLabel>
+                                    
+                                    </Col>
+                                            </Row>
+                                            <TimePicker
+                                                name="time"
+                                                ref="time"
+                                                onChange={this.timeChange}
+                                                value={this.state.time} 
                                             />
                                         </Col>
                                     </Row>
                             </div>                                
                         </Grid>
                         <div className="login_button">
-                            <Button bsStyle="primary" bsSize="large" type="submit">Add</Button>
+                            <Button bsStyle="primary" bsSize="large" type="submit">Edit</Button>
                         </div>
                     </form>
                 </div>

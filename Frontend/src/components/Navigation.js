@@ -4,6 +4,7 @@ import {Row, Col} from 'react-bootstrap'
 
 import '../style/Navigation.css'
 
+
 //import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Row, Col} from 'react-bootstrap'
 
 class Navigation extends React.Component{
@@ -18,7 +19,8 @@ class Navigation extends React.Component{
                             <li className="logo"><h4>Logo</h4></li>
                             <li><Link to="/task">Tasks</Link></li>
                             <li><Link to="/register">Register</Link></li>
-                            <li><Link to="/">Login</Link></li>    
+                            <li><Link to="/">Login</Link></li> 
+                            <li><Link to="/guests">Guests</Link></li>  
                         </ul>
                     </nav>
                 </Col>

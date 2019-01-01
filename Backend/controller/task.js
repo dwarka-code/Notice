@@ -83,8 +83,10 @@ function addTask(req, res){
         title: req.body.title,
         description: req.body.description,
         userid: req.cookies.user_idd,
-        date: req.body.date
+        date: req.body.date,
+        time: req.body.time
     }
+    console.log(item)
 
     db.collection('tasks').insertOne(item, function(err, result){
 
@@ -115,7 +117,7 @@ function deleteTask(req, res){
 
 function editTask(req, res){
 
-    db.collection('tasks').updateOne({_id: ObjectID(req.params.id)}, { $set: {title: req.body.title, description: req.body.description} }, function(err, rez){
+    db.collection('tasks').updateOne({_id: ObjectID(req.params.id)}, { $set: {title: req.body.title, description: req.body.description, date: req.body.date, time: req.body.time} }, function(err, rez){
 
         if(err)
             console.log(err)
