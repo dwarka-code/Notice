@@ -16,7 +16,11 @@ class GuestsPage extends Component{
         this.state={
 
             guests: [],
+            allguests: [],
+            search: ""
         }
+
+        this.handleSearch = this.handleSearch.bind(this)
     }
 
     fetchGuests(){
@@ -31,13 +35,10 @@ class GuestsPage extends Component{
                 this.props.history.push('/')    
             }else{
                
-                console.log(res.data)
                 this.setState({
               
-                    guests: res.data
-                }, function(){
-                    
-                    console.log("STATE GUEST",this.state)
+                    guests: res.data,
+                    allguests: res.data
                 })
             }
         })
@@ -52,13 +53,38 @@ class GuestsPage extends Component{
 
         console.log("BINEEE")
     }
+    clickMe(){
+
+        console.log("MUIE")
+        return(
+            <div>
+                <ul>
+                    <li>Poli</li>
+                    <li>Steaua</li>
+                    <li>Dinamo</li>
+                </ul>
+            </div>
+        )
+    }
+
+    handleSearch = (event) =>{
+
+        event.preventDefault()
+        this.setState({
+
+            search: event.target.value,
+            guests: this.state.allguests.filter((guest)=> new RegExp(event.target.value, "i").exec(guest.name))
+        })
+
+    }
+
     render(){
 
 
         return(
                     <div>
                             <Navigation />
-                            <div className="main">
+                            <div>
                             <div className="logout_button">
                                 <Button bsSize="large" bsStyle="danger" onClick={this.logOut}>Log out</Button>
                             </div>
@@ -69,18 +95,27 @@ class GuestsPage extends Component{
                                     <Col xs={12} md={12}>
                                         <Row>
                                             <Col xs={9} md={10}>                          
-                                               <div className="circle"></div>
+                                               <div className="circle" onClick={this.clickMe}>
+
+                                               </div>
                                             </Col>
                                             <Col xs={3} md={2}>
                                                     <div className="lista">
-                                                            <ListGroup>                                                              
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Search..."
+                                                            value={this.state.search}
+                                                            onChange={this.handleSearch}
+                                                        /> 
+                                                            <ListGroup >                                                              
                                                                 {this.state.guests.map((guests, i)=>(
                                                                     <Draggable
                                                                         onDrag={this.handleDrag}
                                                                         bounds={{left:-1700, top:10, right:0, bottom: 1000}}
+                                                                        key={guests._id}
                                                                     >
-                                                                            <ListGroupItem key={guests._id}>{guests.name}</ListGroupItem>
-                                                                        </Draggable>
+                                                                            <ListGroupItem className="listaa"><h5>{guests.name}</h5> &nbsp;&nbsp;&nbsp;&nbsp; <h5>{guests.status}</h5></ListGroupItem>
+                                                                    </Draggable>
                                                                 ))}
                                                             </ListGroup>
                                                     </div> 

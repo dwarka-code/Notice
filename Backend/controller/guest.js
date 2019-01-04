@@ -16,6 +16,14 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
                
  })
 
+ function truncate(string){
+
+    if (string.length > 20)
+       return string.substring(0,20)+'...';
+    else
+       return string;
+ }
+
  function renderGuests(req, res, next){
 
     let resultArray= []
@@ -29,6 +37,13 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
         resultArray.push(doc)
     }, function(){
 
+        console.log(truncate(resultArray[1].name))
+        for(let i=0;i<resultArray.length;i++){
+
+            console.log(truncate(resultArray[i].name))
+            resultArray[i].name=truncate(resultArray[i].name)
+        }
+        
         if(req.cookies.user_idd){
 
             db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})

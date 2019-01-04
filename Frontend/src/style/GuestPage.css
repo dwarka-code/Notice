@@ -10,3 +10,18 @@
     background-color: #bbb;
     border-radius: 50%;
   }
+
+.lista .listaa{
+
+ text-align: center;
+ display: flex;
+}
+
+.lista input{
+
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+
+ 

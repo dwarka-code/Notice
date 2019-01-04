@@ -3,6 +3,7 @@ import Navigation from './Navigation'
 import {Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import {Button, Row, Col, Table, } from 'react-bootstrap'
+import Moment from 'react-moment'
 
 import '../style/TaskPage.css'
 
@@ -125,7 +126,6 @@ class TaskPage extends React.Component{
         return(
           
             <div>
-                
                 <Navigation/>
                     <div>
                         <div className="logout_button">
@@ -148,11 +148,11 @@ class TaskPage extends React.Component{
                                             <Table responsive={true} hover={true}> 
                                                 <thead>
                                                     <tr>
-                                                    <th></th>
-                                                    <th>Title</th>
-                                                    <th>Description</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
+                                                        <th></th>
+                                                        <th>Title</th>
+                                                        <th>Description</th>
+                                                        <th>Date</th>
+                                                        <th>Time</th>  
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -163,7 +163,7 @@ class TaskPage extends React.Component{
                                                                     <td>{i+1}</td>
                                                                     <td>{tasks.title}</td>
                                                                     <td>{tasks.description}</td>
-                                                                    <td>{tasks.date}</td>
+                                                                    <td><Moment format="YYYY/MM/DD">{tasks.date}</Moment></td>
                                                                     <td>{tasks.time}</td>
                                                                     <td><Button onClick={()=> this.deleteTask(tasks._id)} bsStyle="danger">Delete <i className="fas fa-trash-alt"></i></Button></td>
                                                                     <td><Button onClick={()=> this.editNotice(tasks._id)} bsStyle="warning">Edit <i className="fas fa-edit"></i></Button></td>

@@ -133,13 +133,7 @@ class AddGuest extends React.Component{
                                         
                                         </Col>
                                                 </Row>
-                                                <FormControl
-                                                    type="text"
-                                                    name="status"
-                                                    value={this.state.status}
-                                                    placeholder="Status"
-                                                    onChange={this.handleChange}
-                                                />
+                                                
                                             </Col>
                                         </Row>
                                 </div>                                

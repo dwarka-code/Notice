@@ -37,7 +37,6 @@ class EditTask extends React.Component{
         .then(res => res.json())
         .then(res => {
 
-            console.log("MUIEEEEE",res.data.date)
             this.setState({
 
                 id: res.data._id,
