@@ -1,0 +1,42 @@
+.container .error_message{
+
+    text-align: center;
+    font-size: 25px;
+    background-color: red;
+}
+
+.formm{
+
+    text-align: center;
+}
+
+.formm .login_button{
+
+    margin-top: 20px;
+}
+
+.register{
+
+    text-align: center;
+    margin-top: 25px;
+    font-size: 30px;
+}
+
+.container{
+
+    margin-top: 30px;
+    font-size: 25px;
+}
+
+.space{
+
+    margin-top: 30px;
+}
+
+
+
+
+
+
+
+

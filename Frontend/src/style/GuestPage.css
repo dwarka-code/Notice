@@ -1,0 +1,27 @@
+.logout_button{
+  text-align: right;
+  padding: 10px;
+}
+
+.circle{
+
+    height: 70px;
+    width: 70px;
+    background-color: #bbb;
+    border-radius: 50%;
+  }
+
+.lista .listaa{
+
+ text-align: center;
+ display: flex;
+}
+
+.lista input{
+
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+
+ 
