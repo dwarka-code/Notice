@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd Frontend && npm start && cd Backend && npm start"
+    "Frontend": "cd Frontend && npm start",
+    "Backend": "cd Backend && npm start",
+    "start": "concurrently \"npm run Frontend\""
   },
   "repository": {
     "type": "git",
@@ -17,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/LarisPopa/Notice/issues"
   },
-  "homepage": "https://github.com/LarisPopa/Notice#readme"
+  "homepage": "https://github.com/LarisPopa/Notice#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^4.1.0"
+  }
 }
