@@ -3,24 +3,15 @@
   padding: 10px;
 }
 
-.circle{
+.lista{
 
-    height: 70px;
-    width: 70px;
-    background-color: #bbb;
-    border-radius: 50%;
-  }
-
-.lista .listaa{
-
- text-align: center;
- display: flex;
+  height: 750px;
+  overflow: scroll;
 }
 
-.lista input{
+.addtable{
 
-  width: 100%;
-  margin-bottom: 5px;
+  display: block;
 }
 
 

@@ -9,6 +9,7 @@ import EditTask from './components/EditTask'
 import LoginContainer from './components/LoginContainer'
 import GuestsPage from './components/GuestsPage'
 import AddGuest from './components/AddGuest'
+import AddTable from './components/AddTable'
 
 class App extends Component {
 
@@ -32,8 +33,10 @@ class App extends Component {
             <Route exact path="/task" component={TaskPage} />
             <Route exact path="/guests" component={GuestsPage} />
             <Route exact path="/guests/addguest" component={AddGuest} />
+            <Route exact path="/guests/addtable" component={AddTable} />
             <Route exact path="/task/addtask" component={AddTask} />
             <Route exact path="/task/edit/:id" component={EditTask} />
+            
 
           </Switch>
 

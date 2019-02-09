@@ -58,6 +58,10 @@ function getLogin(req, res){
     let email = req.body.email
     let password = req.body.password
 
+    // daca aici e endpoint pt facebook
+    // se iau date din req , dar primite de la facebook: email, uid, age
+
+    // la db collection caut doar dupa email.
 
     db.collection('user').findOne({email: email, password: password})
     .then((user)=>{

@@ -26,34 +26,41 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 
  function renderGuests(req, res, next){
 
-    let resultArray= []
-    let x = req.cookies.user_name
-    let y = req.cookies.user_idd
+    let arrayGuests= []
+    let arrayTable=[]
+    let name = req.cookies.user_name
+    let userid = req.cookies.user_idd
 
 
-    var cursor = db.collection('guests').find({userid: y})
+    let cursor = db.collection('guests').find({userid: userid})
+    let cursor1 = db.collection('table').find({userid: userid})
+    cursor1.forEach(function(doc, err){
+        if(err)
+            console.log(err)   
+        arrayTable.push(doc)
+        
+    })
     cursor.forEach(function(doc, err){
-
-        resultArray.push(doc)
+        if(err)
+            console.log(err)
+        arrayGuests.push(doc)
     }, function(){
 
-        console.log(truncate(resultArray[1].name))
-        for(let i=0;i<resultArray.length;i++){
+        for(let i=0;i<arrayGuests.length;i++){
 
-            console.log(truncate(resultArray[i].name))
-            resultArray[i].name=truncate(resultArray[i].name)
+            arrayGuests[i].name=truncate(arrayGuests[i].name)
         }
         
-        if(req.cookies.user_idd){
+        if(userid){
 
-            db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
+            db.collection('user').findOne({_id: ObjectID(userid)})
             .then((val)=>{
       
                 if(val){
-                    
                   res.json({
-                      data: resultArray,
-                      name: x,
+                      data: arrayGuests,
+                      data1: arrayTable,
+                      name: name,
                       logIn:'User is Log in',
                     })
                   next();
@@ -90,9 +97,29 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
     })
  }
 
+ function addTable(req, res){
+
+    var item = {
+        number: req.body.number_table,
+        number_of_people: req.body.number_people,
+        userid: req.cookies.user_idd, 
+    }
+
+    db.collection('table').insertOne(item, function(err, result){
+
+        if(err)
+            console.log(err)
+        else{
+            res.json({status: 'Table Saved'})
+            
+        }
+    })
+ }
+
  module.exports = {
 
     renderGuests,
     addGuest,
+    addTable
 }
 

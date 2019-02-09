@@ -58,6 +58,7 @@ app.post('/',cors(corsOptions), task.logOut)
 //Guests
 app.get('/guests', cors(corsOptions), guest.renderGuests)
 app.post('/guests/addguest',cors(corsOptions),guest.addGuest)
+app.post('/guests/addtable', cors(corsOptions), guest.addTable)
 
 
 

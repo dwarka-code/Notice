@@ -2,26 +2,24 @@ import React from "react";
 import Navigation from './Navigation'
 import {Row, Col, Grid, ControlLabel, FormControl, Button} from 'react-bootstrap'
 
-import '../style/AddGuest.css'
-require('default-passive-events');
+import '../style/AddTable.css'
 
 
-class AddGuest extends React.Component{
+class AddTable extends React.Component{
 
     constructor(props){
 
         super(props)
         this.state={
 
-            name: '',
-            age: '',
-            status: ''
+            number_table: '',
+            number_people: '',
         }
     }
 
-    addGuest = e =>{
+    addTable = e =>{
 
-        let url = `/guests/addguest`
+        let url = `/guests/addtable`
         fetch(url,{
 
             method: 'POST',
@@ -59,12 +57,12 @@ class AddGuest extends React.Component{
             credentials: 'include',
             body: JSON.stringify(this.state),
             headers: new Headers({'Content-Type': 'application/json'})
-        },{ credentials: 'include'})
-        .then(res => res.json())
-        .then(res =>{
+            },{ credentials: 'include'})
+            .then(res => res.json())
+            .then(res =>{
 
-            this.props.history.push('/')
-        })
+                this.props.history.push('/')
+            })
     }
 
     handleClick = (event)=>{
@@ -82,27 +80,27 @@ class AddGuest extends React.Component{
                 <div className="container">
                 
                     <div className="title">
-                        <h1>Add Guest</h1>
+                        <h1>Add Table</h1>
                     </div>
                     <div className="formm">
-                        <form onSubmit={this.addGuest}>
+                        <form onSubmit={this.addTable}>
                             <Grid>
                             <div className="space">
                                     <Row>
                                         <Col xs={12} md={12}>
                                         <Row>
                                             <Col xs={12}>
-                                                <i className="fas fa-user-circle"></i>
+                                                <i className="fas fa-sort-numeric-up"></i>
                                                 &nbsp; &nbsp;
-                                            <ControlLabel>Name</ControlLabel>
+                                            <ControlLabel>Number</ControlLabel>
                                         
                                             </Col>
                                         </Row>
                                             <FormControl
-                                                type="text"
-                                                name="name"
-                                                value={this.state.name}
-                                                placeholder="Name"
+                                                type="number"
+                                                name="number_table"
+                                                value={this.state.number_table}
+                                                placeholder="Number"
                                                 onChange={this.handleChange}
                                             />
                                         </Col>
@@ -113,44 +111,23 @@ class AddGuest extends React.Component{
                                             <Col xs={12} md={12} >
                                             <Row>
                                             <Col xs={12}>
-                                                <i className="fas fa-arrow-circle-right"></i>
+                                                <i className="fas fa-sort-numeric-up"></i>
                                                 &nbsp; &nbsp;
-                                            <ControlLabel>Age</ControlLabel>
+                                            <ControlLabel>Number of people</ControlLabel>
                                         
                                         </Col>
                                                 </Row>
                                                 <FormControl
-                                                    type="text"
-                                                    name="age"
-                                                    value={this.state.age}
-                                                    placeholder="Age"
+                                                    type="number"
+                                                    name="number_people"
+                                                    value={this.state.number_people}
+                                                    placeholder="Number of people"
                                                     onChange={this.handleChange}
                                                 />
                                             </Col>
                                         </Row>
                                 </div>
-                                <div className="space">
-                                        <Row>
-                                            <Col xs={12} md={12} >
-                                            <Row>
-                                            <Col xs={12}>
-                                                <i className="fas fa-question-circle"></i>
-                                                &nbsp; &nbsp;
-                                            <ControlLabel>Status</ControlLabel>
-                                        
-                                        </Col>
-                                                </Row>
-
-                                                <select name="status" value={this.state.status} onChange={this.handleChange} >
-                                                    <option value="">--Please choose an option--</option>
-                                                    <option value="vine">&#xf00c; Vine</option>
-                                                    <option value="nu vine">&#xf00d; Nu vine</option>
-                                                    <option value="nu site">&#xf128; Nu stie</option>
-                                                </select>
-                                                
-                                            </Col>
-                                        </Row>
-                                </div>                                
+                                                         
                             </Grid>
                             <div className="login_button">
                                 <Button bsStyle="primary" bsSize="large" type="submit">Add</Button>
@@ -163,4 +140,4 @@ class AddGuest extends React.Component{
     }
 }
 
-export default AddGuest
+export default AddTable

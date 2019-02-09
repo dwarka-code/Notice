@@ -1,9 +1,10 @@
 import React ,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import Navigation from './Navigation'
+import Circle from './Circle'
 import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 
-import Draggable from 'react-draggable'; 
+import Draggable from 'react-draggable';
 
 
 import '../style/GuestPage.css'
@@ -16,11 +17,10 @@ class GuestsPage extends Component{
         this.state={
 
             guests: [],
-            allguests: [],
-            search: ""
+            tables: [],
+            search: '',
+            points: 0
         }
-
-        this.handleSearch = this.handleSearch.bind(this)
     }
 
     fetchGuests(){
@@ -34,11 +34,11 @@ class GuestsPage extends Component{
 
                 this.props.history.push('/')    
             }else{
-               
+               console.log(res.data1)
                 this.setState({
               
                     guests: res.data,
-                    allguests: res.data
+                    tables: res.data1,
                 })
             }
         })
@@ -53,34 +53,39 @@ class GuestsPage extends Component{
 
         console.log("BINEEE")
     }
-    clickMe(){
 
-        console.log("MUIE")
-        return(
-            <div>
-                <ul>
-                    <li>Poli</li>
-                    <li>Steaua</li>
-                    <li>Dinamo</li>
-                </ul>
-            </div>
-        )
-    }
+    handleSearch = (event)=>{
 
-    handleSearch = (event) =>{
-
-        event.preventDefault()
         this.setState({
 
             search: event.target.value,
-            guests: this.state.allguests.filter((guest)=> new RegExp(event.target.value, "i").exec(guest.name))
         })
 
     }
+    logOut = e =>{
+
+        let url = "/"
+        fetch(url,{
+
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(),
+            headers: new Headers({'Content-Type': 'application/json'})
+        },{ credentials: 'include'})
+        .then(res => res.json())
+        .then(res =>{
+
+            this.props.history.push('/')
+        })
+        e.preventDefault()
+    }
 
     render(){
+        let filterGuests = this.state.guests.filter((guests) =>{
 
-
+            return guests.name.indexOf(this.state.search) !== -1
+        })
+// {Array.from(Array(this.state.points)).map((x, index) => <Circle key={index} />)}
         return(
                     <div>
                             <Navigation />
@@ -88,19 +93,22 @@ class GuestsPage extends Component{
                             <div className="logout_button">
                                 <Button bsSize="large" bsStyle="danger" onClick={this.logOut}>Log out</Button>
                             </div>
-                            <div className="addtask">
-                                <Link to={`/guests/addguest`}><i className="fas fa-plus"></i></Link>
-                            </div>
                                 <Row>
                                     <Col xs={12} md={12}>
                                         <Row>
-                                            <Col xs={9} md={10}>                          
-                                               <div className="circle" onClick={this.clickMe}>
-
-                                               </div>
+                                            <Col xs={9} md={10}>
+                                            <div className="addtable">                          
+                                                <Link to={`/guests/addtable`} style={{fontSize: 40}}><i className="fas fa-plus"></i></Link>
+                                            </div>
+                                                          
+                                                    {this.state.tables.map((table)=>(
+                                                            <Circle key= {table._id} numberTable={table.number} numberOfPeople={table.number_of_people}/>
+                                                                   
+                                                    ))}
                                             </Col>
                                             <Col xs={3} md={2}>
-                                                    <div className="lista">
+                                                    <div>
+                                                        <Link to={`/guests/addguest`} style={{fontSize: 40}}><i className="fas fa-plus"></i></Link>
                                                         <input
                                                             type="text"
                                                             placeholder="Search..."
@@ -108,17 +116,18 @@ class GuestsPage extends Component{
                                                             onChange={this.handleSearch}
                                                         /> 
                                                             <ListGroup >                                                              
-                                                                {this.state.guests.map((guests, i)=>(
+                                                                {filterGuests.map((guests)=>(
                                                                     <Draggable
                                                                         onDrag={this.handleDrag}
                                                                         bounds={{left:-1700, top:10, right:0, bottom: 1000}}
                                                                         key={guests._id}
                                                                     >
-                                                                            <ListGroupItem className="listaa"><h5>{guests.name}</h5> &nbsp;&nbsp;&nbsp;&nbsp; <h5>{guests.status}</h5></ListGroupItem>
+                                                                        <ListGroupItem ><h4>{guests.name} &nbsp;&nbsp; {guests.status}</h4></ListGroupItem>
                                                                     </Draggable>
                                                                 ))}
-                                                            </ListGroup>
-                                                    </div> 
+                                                            </ListGroup>                                                       
+                                                        </div>
+                                                    
                                             </Col>
                                         </Row>                              
                                     </Col>
