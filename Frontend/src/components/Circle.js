@@ -8,7 +8,8 @@ class Circle extends React.Component{
 
         return(
             <div className="numberCircle">
-                <div>{this.props.numberTable}</div>                  
+                <div>{this.props.numberTable}</div>
+           
             </div>
         )
     }

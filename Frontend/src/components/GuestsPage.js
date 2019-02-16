@@ -2,6 +2,7 @@ import React ,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import Navigation from './Navigation'
 import Circle from './Circle'
+import Patrat from './Patrat'
 import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 
 import Draggable from 'react-draggable';
@@ -19,7 +20,7 @@ class GuestsPage extends Component{
             guests: [],
             tables: [],
             search: '',
-            points: 0
+            points: 5
         }
     }
 
@@ -34,7 +35,6 @@ class GuestsPage extends Component{
 
                 this.props.history.push('/')    
             }else{
-               console.log(res.data1)
                 this.setState({
               
                     guests: res.data,
@@ -48,6 +48,7 @@ class GuestsPage extends Component{
     componentDidMount(){
 
         this.fetchGuests()
+        
     }
     handleDrag(){
 
@@ -86,6 +87,7 @@ class GuestsPage extends Component{
             return guests.name.indexOf(this.state.search) !== -1
         })
 // {Array.from(Array(this.state.points)).map((x, index) => <Circle key={index} />)}
+// {Array.from(Array(this.state.points)).map((x, index) => <Patrat key={index} />)}
         return(
                     <div>
                             <Navigation />
@@ -101,10 +103,17 @@ class GuestsPage extends Component{
                                                 <Link to={`/guests/addtable`} style={{fontSize: 40}}><i className="fas fa-plus"></i></Link>
                                             </div>
                                                           
-                                                    {this.state.tables.map((table)=>(
-                                                            <Circle key= {table._id} numberTable={table.number} numberOfPeople={table.number_of_people}/>
-                                                                   
+                                                    {this.state.tables.map((table, i)=>(
+                                                        <div key={table._id}>
+                                                        
+                                                            <Circle numberTable={table.number}/>                                                            
+                                                            {Array(6).fill(<Patrat />)}
+                                                            
+                                                        </div>
                                                     ))}
+                                                    
+
+                                                    
                                             </Col>
                                             <Col xs={3} md={2}>
                                                     <div>
