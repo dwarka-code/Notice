@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import FacebookLogin from 'react-facebook-login'
 
 import 'react-toastify/dist/ReactToastify.min.css' 
 import {ToastContainer, toast} from 'react-toastify'
@@ -19,7 +20,9 @@ class LoginContainer extends React.Component{
             email: '',
             password: '',
             message: '',
-            value: ''
+            value: '',
+            isLogIn: false,
+            name: '',
         }
 
         this.getLogin = this.getLogin.bind(this)
@@ -43,9 +46,6 @@ class LoginContainer extends React.Component{
 
                     email: user.email,
                     password: user.password,
-                },()=>{
-
-                    console.log("STATE",this.state)
                 })
                 if(user.email === ''){
                     
@@ -57,7 +57,7 @@ class LoginContainer extends React.Component{
                 else{
 
                     console.log(user)
-                    this.props.history.push('/task')
+                    this.props.history.push('/guests')
                 }
         })
         .catch(err => console.log(err))
@@ -85,10 +85,49 @@ class LoginContainer extends React.Component{
         return null;
       }
 
- 
+    componentClicked = () =>{
+
+        console.log("click")
+    }
+
+    responseFacebook = response =>{
+
+        console.log(response)
+
+        this.setState({
+
+            email: response.email
+        },()=>{
+
+            console.log("FACEBOOK STATE",this.state)
+        })
+        
+
+        this.props.history.push('/guests')
+    }
+/*
+    <div className="facebook">
+    {fbContent}
+</div>
+*/
 
     render(){
 
+        let fbContent
+
+        if(this.state.isLogIn){
+            fbContent = null
+
+        }
+        else{
+
+            fbContent = (<FacebookLogin
+                appId="221786842098988"
+                autoLoad={true}
+                fields="name,email,picture"
+                onClick={this.componentClicked}
+                callback={this.responseFacebook} /> )
+        }
         return (
             <div className="container">
 
@@ -111,7 +150,6 @@ class LoginContainer extends React.Component{
                                             <i className="far fa-envelope"></i>
                                             &nbsp; &nbsp;
                                         <ControlLabel>Email</ControlLabel>
-                                     
                                         </Col>
                                     </Row>
                                         <FormControl
@@ -154,10 +192,9 @@ class LoginContainer extends React.Component{
 
                 <div className="register">
                     <Link to={`/register`}>Register</Link>
+                    {fbContent}
                 </div>
-
-                
-             
+            
             </div>     
 
         )

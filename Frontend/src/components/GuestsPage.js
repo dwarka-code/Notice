@@ -4,10 +4,6 @@ import Navigation from './Navigation'
 import Circle from './Circle'
 import Patrat from './Patrat'
 import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
-
-import Draggable from 'react-draggable';
-
-
 import '../style/GuestPage.css'
 
 class GuestsPage extends Component{
@@ -19,8 +15,9 @@ class GuestsPage extends Component{
 
             guests: [],
             tables: [],
+            asezati: [],
+            draggedGUest: {},
             search: '',
-            points: 5
         }
     }
 
@@ -48,11 +45,7 @@ class GuestsPage extends Component{
     componentDidMount(){
 
         this.fetchGuests()
-        
-    }
-    handleDrag(){
-
-        console.log("BINEEE")
+    
     }
 
     handleSearch = (event)=>{
@@ -81,14 +74,41 @@ class GuestsPage extends Component{
         e.preventDefault()
     }
 
+    onDragOver = e =>{
+
+        e.preventDefault()
+    }
+
+    onDrag = (ev, guest) =>{
+
+        ev.preventDefault()
+        this.setState({
+
+            draggedGUest: guest
+        })
+    }
+
+    onDrop = (e)=>{
+
+        e.preventDefault()
+       const {asezati, draggedGUest, guests} = this.state
+
+       this.setState({
+
+        asezati: [...asezati, draggedGUest],
+        guests: guests.filter(guest => guest._id !==draggedGUest._id),
+        draggedGUest: {}
+       })
+    }
+
     render(){
         let filterGuests = this.state.guests.filter((guests) =>{
 
             return guests.name.indexOf(this.state.search) !== -1
         })
-// {Array.from(Array(this.state.points)).map((x, index) => <Circle key={index} />)}
-// {Array.from(Array(this.state.points)).map((x, index) => <Patrat key={index} />)}
+
         return(
+            
                     <div>
                             <Navigation />
                             <div>
@@ -104,14 +124,22 @@ class GuestsPage extends Component{
                                             </div>
                                                           
                                                     {this.state.tables.map((table, i)=>(
-                                                        <div key={table._id}>
-                                                        
-                                                            <Circle numberTable={table.number}/>                                                            
-                                                            {Array(6).fill(<Patrat />)}
                                                             
-                                                        </div>
+                                                            <div key={i} className="parent" onDrop={(e)=> this.onDrop(e)} onDragOver={(e)=>this.onDragOver(e)}>
+
+                                                                <div className="center">
+                                                                    <Circle key={table._id} numberTable={table.number} asezati={this.state.asezati}/>
+                                                                </div>                                                                                                                     
+                                                                <div className="child">
+                                                                    {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
+                                                                        (<Patrat key={index} asezati={this.state.asezati} />)
+                                                                         )}
+                                                                </div>
+                                                                
+                                                            </div>
                                                     ))}
-                                                    
+                                                   
+                                                   
 
                                                     
                                             </Col>
@@ -126,16 +154,14 @@ class GuestsPage extends Component{
                                                         /> 
                                                             <ListGroup >                                                              
                                                                 {filterGuests.map((guests)=>(
-                                                                    <Draggable
-                                                                        onDrag={this.handleDrag}
-                                                                        bounds={{left:-1700, top:10, right:0, bottom: 1000}}
-                                                                        key={guests._id}
-                                                                    >
-                                                                        <ListGroupItem ><h4>{guests.name} &nbsp;&nbsp; {guests.status}</h4></ListGroupItem>
-                                                                    </Draggable>
+                                                                   
+                                                                    <ListGroupItem onDrag={(e)=>this.onDrag(e, guests)} draggable key={guests._id}><h4>{guests.name} &nbsp;&nbsp; {guests.status}</h4></ListGroupItem>
                                                                 ))}
-                                                            </ListGroup>                                                       
+                                                            </ListGroup>
+                                                                                                                  
                                                         </div>
+                                                        
+                                                        
                                                     
                                             </Col>
                                         </Row>                              
