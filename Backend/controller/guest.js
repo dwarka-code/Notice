@@ -26,10 +26,16 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 
  function renderGuests(req, res, next){
 
+
+    console.log("REQUEST: ",req.body.asezati)
+    //console.log("ID: ", req.body.id)
     let arrayGuests= []
     let arrayTable=[]
     let name = req.cookies.user_name
     let userid = req.cookies.user_idd
+
+    
+    db.collection('table').updateOne({_id: ObjectID(req.body.id)}, { $set: {people: req.body.asezati} })
 
 
     let cursor = db.collection('guests').find({userid: userid})
@@ -102,7 +108,8 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
     var item = {
         number: req.body.number_table,
         number_of_people: req.body.number_people,
-        userid: req.cookies.user_idd, 
+        userid: req.cookies.user_idd,
+        people: []
     }
 
     db.collection('table').insertOne(item, function(err, result){
@@ -115,11 +122,10 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
         }
     })
  }
-
  module.exports = {
 
     renderGuests,
     addGuest,
-    addTable
+    addTable,
 }
 

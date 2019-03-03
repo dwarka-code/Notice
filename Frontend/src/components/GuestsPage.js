@@ -2,7 +2,6 @@ import React ,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import Navigation from './Navigation'
 import Circle from './Circle'
-import Patrat from './Patrat'
 import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 import '../style/GuestPage.css'
 
@@ -17,7 +16,7 @@ class GuestsPage extends Component{
             tables: [],
             asezati: [],
             draggedGUest: {},
-            search: '',
+            search: ''
         }
     }
 
@@ -45,7 +44,6 @@ class GuestsPage extends Component{
     componentDidMount(){
 
         this.fetchGuests()
-    
     }
 
     handleSearch = (event)=>{
@@ -88,9 +86,8 @@ class GuestsPage extends Component{
         })
     }
 
-    onDrop = (e)=>{
-
-        e.preventDefault()
+    onDrop = (e, id)=>{
+        let url = '/guests'
        const {asezati, draggedGUest, guests} = this.state
 
        this.setState({
@@ -98,7 +95,55 @@ class GuestsPage extends Component{
         asezati: [...asezati, draggedGUest],
         guests: guests.filter(guest => guest._id !==draggedGUest._id),
         draggedGUest: {}
+       }, function(){
+
+        console.log("Asezati",this.state.asezati)
+
+        this.state.tables.map((table)=>{
+           
+            if(table._id === id){
+
+                table.people.push(draggedGUest)
+                
+                let data = {
+
+                    asezati: table.people,
+                    id: table._id
+                }
+
+                let p = parseInt(data.asezati.length)
+                let q = parseInt(table.number_of_people)
+
+                if(p === q){
+
+                    console.log("Masa e plina, nu mai pot sa adaug")
+                    return
+                   
+                }
+                else{
+
+                    console.log("Mai poti sa adaugi oameni la masa")
+                }
+
+                fetch(url,{
+
+                    method: 'PUT',
+                    credentials: 'include',
+                    body: JSON.stringify(data),
+                    headers: new Headers({'Content-Type': 'application/json'})
+                    },{ credentials: 'include'})
+                    .then(res => {         
+                        res.json()
+                        this.props.history.push('/guests')
+                    })               
+            }
+            
+            return asezati
+        })
+ 
        })
+
+       e.preventDefault()
     }
 
     render(){
@@ -106,14 +151,13 @@ class GuestsPage extends Component{
 
             return guests.name.indexOf(this.state.search) !== -1
         })
-
-        return(
-            
+        return(    
                     <div>
                             <Navigation />
                             <div>
                             <div className="logout_button">
                                 <Button bsSize="large" bsStyle="danger" onClick={this.logOut}>Log out</Button>
+                                <h1>{this.state.message}</h1>
                             </div>
                                 <Row>
                                     <Col xs={12} md={12}>
@@ -124,24 +168,13 @@ class GuestsPage extends Component{
                                             </div>
                                                           
                                                     {this.state.tables.map((table, i)=>(
-                                                            
-                                                            <div key={i} className="parent" onDrop={(e)=> this.onDrop(e)} onDragOver={(e)=>this.onDragOver(e)}>
-
-                                                                <div className="center">
-                                                                    <Circle key={table._id} numberTable={table.number} asezati={this.state.asezati}/>
-                                                                </div>                                                                                                                     
-                                                                <div className="child">
-                                                                    {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
-                                                                        (<Patrat key={index} asezati={this.state.asezati} />)
-                                                                         )}
-                                                                </div>
+                                                               
+                                                                <div key = {i} className="center" onDrop={(e)=> this.onDrop(e, table._id)} onDragOver={(e)=>this.onDragOver(e)}>
                                                                 
-                                                            </div>
-                                                    ))}
-                                                   
-                                                   
+                                                                    <Circle key={table._id} numberTable={table.number} numberPeople = {table.number_of_people} asezati={table.people}/>
 
-                                                    
+                                                                </div>                                                                                                                                                                                 
+                                                   ))}                                                                                        
                                             </Col>
                                             <Col xs={3} md={2}>
                                                     <div>
@@ -159,17 +192,13 @@ class GuestsPage extends Component{
                                                                 ))}
                                                             </ListGroup>
                                                                                                                   
-                                                        </div>
-                                                        
-                                                        
-                                                    
+                                                        </div>         
                                             </Col>
                                         </Row>                              
                                     </Col>
                                 </Row>
                             </div>
                     </div>
-
         )
     }
 }
