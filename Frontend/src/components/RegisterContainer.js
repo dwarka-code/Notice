@@ -14,7 +14,7 @@ class RegisterContainer extends React.Component{
             password: '',
             name: '',
             age:'',
-            message:''
+            message:'',
 
         }
 
@@ -34,7 +34,6 @@ class RegisterContainer extends React.Component{
         })
         .then(res => res.json())
         .then(data => {
-
             if(data.email === ''){
 
                 this.setState({
@@ -43,7 +42,7 @@ class RegisterContainer extends React.Component{
                 })
             }
             else{
-                this.props.history.push("/admin") 
+                this.props.history.push("/") 
             }
         })
 
@@ -65,6 +64,14 @@ class RegisterContainer extends React.Component{
         this.setState({
 
             password: e.target.value
+        })
+    }
+
+    onChangeHandler = event =>{
+
+        this.setState({
+
+            selectedFile: event.target.files[0]
         })
     }
 
