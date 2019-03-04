@@ -3,7 +3,6 @@ import Navigation from './Navigation'
 import {Row, Col, Grid, ControlLabel, FormControl, Button} from 'react-bootstrap'
 
 import '../style/AddGuest.css'
-require('default-passive-events');
 
 
 class AddGuest extends React.Component{
@@ -57,7 +56,7 @@ class AddGuest extends React.Component{
 
             method: 'POST',
             credentials: 'include',
-            body: JSON.stringify(this.state),
+            body: JSON.stringify(),
             headers: new Headers({'Content-Type': 'application/json'})
         },{ credentials: 'include'})
         .then(res => res.json())
@@ -79,6 +78,9 @@ class AddGuest extends React.Component{
         return (
             <div>
                 <Navigation />
+                <div className="logout_button">
+                    <Button bsSize="large" bsStyle="danger" onClick={this.logOut}>Log out</Button>
+                </div>
                 <div className="container">
                 
                     <div className="title">
@@ -145,7 +147,7 @@ class AddGuest extends React.Component{
                                                     <option value="">--Please choose an option--</option>
                                                     <option value="vine">&#xf00c; Vine</option>
                                                     <option value="nu vine">&#xf00d; Nu vine</option>
-                                                    <option value="nu site">&#xf128; Nu stie</option>
+                                                    <option value="nu stie">&#xf128; Nu stie</option>
                                                 </select>
                                                 
                                             </Col>
