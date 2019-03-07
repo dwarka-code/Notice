@@ -155,6 +155,7 @@ class LoginContainer extends React.Component{
                                         <FormControl
                                             type="email"
                                             name="email"
+                                            autoComplete="email"
                                             value={this.state.email}
                                             placeholder="Email"
                                             onChange={this.handleEvent}
@@ -176,6 +177,7 @@ class LoginContainer extends React.Component{
                                             <FormControl
                                                 type="password"
                                                 name="password"
+                                                autoComplete="current-password"
                                                 value={this.state.password}
                                                 placeholder="Password"
                                                 onChange={this.handleEvent}
