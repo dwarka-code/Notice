@@ -14,5 +14,43 @@
   display: block;
 }
 
+.spatiu{
+
+  width: 200px;
+  height: 200px;
+  background-color: green;
+}
+
+.guest{
+
+  cursor: pointer;
+  transition: 1s;
+}
+
+.guest:hover{
+
+  transform: rotate(360deg);
+}
+
+/*
+.table{
+
+  background-color:#F0F0F0;
+  transition: 2s;
+}
+
+.table:hover{
+
+  background-color: grey;
+
+}
+*/
+
+
+
+
+
+
+
 
  
