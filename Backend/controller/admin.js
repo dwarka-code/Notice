@@ -24,6 +24,8 @@ function renderAdmin(req, res, next){
             let age2040 = 0
             let age4060 =0
             let agebigger60=0
+            let x = "admin@admin.com"
+            let y = req.cookies.user_email
             let cursor = db.collection('user').find()
             cursor.forEach(function(doc, err){
 
@@ -40,8 +42,7 @@ function renderAdmin(req, res, next){
                 resultArray.push(doc)
             }, function(){
 
-                if(req.cookies.user_idd){
-  
+                if(x === y){
                     db.collection('user').findOne({_id: ObjectID(req.cookies.user_idd)})
                     .then((val)=>{
               
