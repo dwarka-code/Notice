@@ -21,6 +21,8 @@
   background-color: green;
 }
 
+
+/*
 .guest{
 
   cursor: pointer;
@@ -32,7 +34,6 @@
   transform: rotate(360deg);
 }
 
-/*
 .table{
 
   background-color:#F0F0F0;
@@ -45,12 +46,68 @@
 
 }
 */
-
-
-
-
-
-
-
-
+.circle-container {
+  position: relative;
+  width: 20em;
+  height: 20em;
+  border-radius: 50%;
+  padding: 0;
+  list-style: none;
+  margin: 5em auto 0;
+}
+.circle-container > * {
+  display: block;
+  position: absolute;
  
+  margin: -15em;
+  width: 6em;
+  height: 6em;
+}
+.circle-container > *:nth-of-type(1) {
+  -webkit-transform: rotate(0deg) translate(10em) rotate(0deg);
+          transform: rotate(0deg) translate(10em) rotate(0deg);
+}
+.circle-container > *:nth-of-type(2) {
+  -webkit-transform: rotate(30deg) translate(10em) rotate(-30deg);
+          transform: rotate(30deg) translate(10em) rotate(-30deg);
+}
+.circle-container > *:nth-of-type(3) {
+  -webkit-transform: rotate(60deg) translate(10em) rotate(-60deg);
+          transform: rotate(60deg) translate(10em) rotate(-60deg);
+}
+.circle-container > *:nth-of-type(4) {
+  -webkit-transform: rotate(90deg) translate(10em) rotate(-90deg);
+          transform: rotate(90deg) translate(10em) rotate(-90deg);
+}
+.circle-container > *:nth-of-type(5) {
+  -webkit-transform: rotate(120deg) translate(10em) rotate(-120deg);
+          transform: rotate(120deg) translate(10em) rotate(-120deg);
+}
+.circle-container > *:nth-of-type(6) {
+  -webkit-transform: rotate(150deg) translate(10em) rotate(-150deg);
+          transform: rotate(150deg) translate(10em) rotate(-150deg);
+}
+.circle-container > *:nth-of-type(7) {
+  -webkit-transform: rotate(180deg) translate(10em) rotate(-180deg);
+          transform: rotate(180deg) translate(10em) rotate(-180deg);
+}
+.circle-container > *:nth-of-type(8) {
+  -webkit-transform: rotate(210deg) translate(10em) rotate(-210deg);
+          transform: rotate(210deg) translate(10em) rotate(-210deg);
+}
+.circle-container > *:nth-of-type(9) {
+  -webkit-transform: rotate(240deg) translate(10em) rotate(-240deg);
+          transform: rotate(240deg) translate(10em) rotate(-240deg);
+}
+.circle-container > *:nth-of-type(10) {
+  -webkit-transform: rotate(270deg) translate(10em) rotate(-270deg);
+          transform: rotate(270deg) translate(10em) rotate(-270deg);
+}
+.circle-container > *:nth-of-type(11) {
+  -webkit-transform: rotate(300deg) translate(10em) rotate(-300deg);
+          transform: rotate(300deg) translate(10em) rotate(-300deg);
+}
+.circle-container > *:nth-of-type(12) {
+  -webkit-transform: rotate(330deg) translate(10em) rotate(-330deg);
+          transform: rotate(330deg) translate(10em) rotate(-330deg);
+}

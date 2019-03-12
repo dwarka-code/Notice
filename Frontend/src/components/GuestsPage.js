@@ -2,14 +2,13 @@ import React ,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import Navigation from './Navigation'
 import Circle from './Circle'
-import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 import Patrat from './Patrat'
+import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 import {ToastContainer, toast} from 'react-toastify'
 import { Draggable, Droppable } from 'react-drag-and-drop'
+import $ from 'jquery'
 
 import '../style/GuestPage.css'
-
-import $ from 'jquery'
 
 class GuestsPage extends Component{
 
@@ -67,78 +66,56 @@ class GuestsPage extends Component{
         e.preventDefault()
     }
 
-    onDragOver = e =>{
-
-        e.preventDefault()
-    }
-
-    onDrag = (ev, guest) =>{
-
-        ev.preventDefault()
+    ondrop(guest, id) {
+        let url = '/guests'
+        const { asezati } = this.state
+        
         this.setState({
 
-            draggedGUest: guest
+            asezati: [...asezati, guest], 
+        },function(){
+
+            console.log("ASEZATI: ",this.state.asezati)
+            this.state.tables.map((table)=>{    
+                if(table._id === id){
+                    table.people.push(guest)             
+                    let data = {
+                        asezati: table.people,
+                        id: table._id,
+                        oameni: this.state.guests
+                    }
+                    let p = parseInt(data.asezati.length)
+                    let q = parseInt(table.number_of_people)             
+                    if(p >= q){
+                        console.log("Masa e plina, nu mai pot sa adaug")                   
+                        $(document.body).bind("dragover", function(e) {
+                            e.preventDefault();
+                            return false;
+                        });
+                        $(document.body).bind("drop", function(e){
+                            e.preventDefault();
+                            console.log("GATA BA, nu mai poti sa adaugi")
+                            toast.error("The table is full")
+                            return false;
+                        });          
+                    }
+                    else{
+                        console.log("Mai poti sa adaugi oameni la masa")
+                    }
+                    fetch(url,{
+                        method: 'PUT',
+                        credentials: 'include',
+                        body: JSON.stringify(data),
+                        headers: new Headers({'Content-Type': 'application/json'})
+                        },{ credentials: 'include'})
+                        .then(res => {         
+                            res.json()
+                            this.props.history.push('/guests')
+                        })               
+                }          
+                return false
+            })
         })
-    }
-
-    onDrop = (e, id)=>{
-        let url = '/guests'
-       const {asezati, draggedGUest, guests} = this.state
-
-       this.setState({
-
-        asezati: [...asezati, draggedGUest],
-        guests: guests.filter(guest => guest._id !==draggedGUest._id),
-        draggedGUest: {}
-       }, function(){
-           console.log("Oameni ce nu sunt asezati: ",this.state.guests)
-        console.log("Asezati",this.state.asezati)
-        this.state.tables.map((table)=>{    
-            if(table._id === id){
-                table.people.push(draggedGUest)             
-                let data = {
-                    asezati: table.people,
-                    id: table._id,
-                    oameni: this.state.guests
-                }
-                let p = parseInt(data.asezati.length)
-                let q = parseInt(table.number_of_people)             
-                if(p >= q){
-                    console.log("Masa e plina, nu mai pot sa adaug")                   
-                    $(document.body).bind("dragover", function(e) {
-                        e.preventDefault();
-                        return false;
-                    });
-                    $(document.body).bind("drop", function(e){
-                        e.preventDefault();
-                        console.log("GATA BA, nu mai poti sa adaugi")
-                        toast.error("The table is full")
-                        return false;
-                    });          
-                }
-                else{
-                    console.log("Mai poti sa adaugi oameni la masa")
-                }
-                fetch(url,{
-                    method: 'PUT',
-                    credentials: 'include',
-                    body: JSON.stringify(data),
-                    headers: new Headers({'Content-Type': 'application/json'})
-                    },{ credentials: 'include'})
-                    .then(res => {         
-                        res.json()
-                        this.props.history.push('/guests')
-                    })               
-            }          
-            return false
-        })
-       })
-       e.preventDefault()
-    }
-
-    pula(data) {
-        console.log(data)
-        // => banana 
     }
 
     render(){
@@ -162,13 +139,20 @@ class GuestsPage extends Component{
                                                 <Link to={`/guests/addtable`} style={{fontSize: 40}}><i className="fas fa-plus"></i></Link>
                                             </div>                                                         
                                                     {this.state.tables.map((table, i)=>(                                                              
-                                                               <div className="table" key = {i} onDrop={(e)=> this.onDrop(e, table._id)} onDragOver={(e)=>this.onDragOver(e)}>                                                              
-                                                                    <Circle key={table._id} numberTable={table.number} numberPeople = {table.number_of_people} asezati={table.people}/>
-                                                                    {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
-                                                                            (<Patrat key={index} draggable onDrag={(e)=>this.onDrag(e, item)} asezati={table.people} />)
-                                                                    )}
+                                                               <div className="table" key = {i}>    
+                                                                                                               
+                                                                            <Circle numberTable={table.number} numberPeople = {table.number_of_people}/>  
+                                                                        
+                                                                            <ul className="circle-container">                                                             
+                                                                                {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
+                                                                                                                
+                                                                                    <li> <Patrat key={index} /></li>
+                                                                             
+                                                                                )}
+                                                                                </ul>
+                                                                            
                                                                 </div>                                                                                                                                                                                 
-                                                   ))}                                                                                        
+                                                   ))}                                                                                    
                                             </Col>
                                             <Col xs={3} md={2}>
                                                     <div>
@@ -181,8 +165,10 @@ class GuestsPage extends Component{
                                                         /> 
                                                             <ListGroup >                                                              
                                                                 {filterGuests.map((guests)=>(
-                                                                   
-                                                                   <div className="guest" key={guests._id}><ListGroupItem onDrop={(e)=> this.onDrop2(e, guests)} onDragOver={(e)=>this.onDragOver(e)} onDrag={(e)=>this.onDrag(e, guests)} draggable key={guests._id}><h4>{guests.name} &nbsp;&nbsp; {guests.status}</h4></ListGroupItem></div>
+                                                                   <Draggable  key={guests._id} type="guest" data={guests.name}>
+                                                                     <div className="guest"><ListGroupItem><h4>{guests.name} &nbsp;&nbsp; {guests.status}</h4></ListGroupItem></div>
+                                                                   </Draggable>
+                                                                  
                                                                 ))}
                                                             </ListGroup>                                                                                                                
                                                         </div>         
@@ -199,9 +185,9 @@ class GuestsPage extends Component{
                                     <Draggable type="metal" data="silver"><li>Silver</li></Draggable>
                                 </ul>
                                 <Droppable
-                                    types={['fruit']} // <= allowed drop types
+                                    types={['guest']} // <= allowed drop types
                                     className="spatiu"
-                                    onDrop={this.pula.bind(this)}>
+                                    onDrop={this.ondrop.bind(this)}>
                                     <ul className="Smoothie"></ul>
                                 </Droppable>
                             </div>
