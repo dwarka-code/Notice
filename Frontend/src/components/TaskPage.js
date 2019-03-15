@@ -122,6 +122,11 @@ class TaskPage extends React.Component{
         }
     }
 
+    onDrop(data) {
+        console.log(data)
+        // => banana 
+    }
+
     render(){
         return(
           
@@ -181,8 +186,7 @@ class TaskPage extends React.Component{
                     </div>
                     <div className="notask">
                         {this.state.isVisible && <h3>{this.state.message}</h3>}
-                    </div> 
-                                       
+                    </div>             
             </div>
                           
         )

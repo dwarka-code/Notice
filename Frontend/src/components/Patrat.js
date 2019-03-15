@@ -8,7 +8,7 @@ class Patrat extends React.Component{
 
         return(
 
-            <div className="square"></div>
+            <div className="square">{this.props.initiala_nume}</div>
         )
     }
 }

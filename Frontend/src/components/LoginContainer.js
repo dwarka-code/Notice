@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
-import FacebookLogin from 'react-facebook-login'
+//import FacebookLogin from 'react-facebook-login'
 
 import 'react-toastify/dist/ReactToastify.min.css' 
 import {ToastContainer, toast} from 'react-toastify'
@@ -48,15 +48,12 @@ class LoginContainer extends React.Component{
                     password: user.password,
                 })
                 if(user.email === ''){
-                    
-                    console.log(user)
 
                     this.setState({message: "Email or password is wrong"})
                     //toast.error("Email or password is wrong")
                 }
                 else{
 
-                    console.log(user)
                     this.props.history.push('/guests')
                 }
         })
@@ -85,11 +82,6 @@ class LoginContainer extends React.Component{
         return null;
       }
 
-    componentClicked = () =>{
-
-        console.log("click")
-    }
-
     responseFacebook = response =>{
 
         console.log(response)
@@ -97,22 +89,15 @@ class LoginContainer extends React.Component{
         this.setState({
 
             email: response.email
-        },()=>{
-
-            console.log("FACEBOOK STATE",this.state)
         })
         
 
         this.props.history.push('/guests')
     }
-/*
-    <div className="facebook">
-    {fbContent}
-</div>
-*/
+
 
     render(){
-
+/*
         let fbContent
 
         if(this.state.isLogIn){
@@ -128,6 +113,7 @@ class LoginContainer extends React.Component{
                 onClick={this.componentClicked}
                 callback={this.responseFacebook} /> )
         }
+        */
         return (
             <div className="container">
 
@@ -194,7 +180,6 @@ class LoginContainer extends React.Component{
 
                 <div className="register">
                     <Link to={`/register`}>Register</Link>
-                    {fbContent}
                 </div>
             
             </div>     

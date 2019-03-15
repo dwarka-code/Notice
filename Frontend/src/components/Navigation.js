@@ -8,6 +8,23 @@ import {Link} from 'react-router-dom'
 
 class Navigation extends React.Component{
 
+    logOut = () =>{
+
+        let url = "/"
+        fetch(url,{
+
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(),
+            headers: new Headers({'Content-Type': 'application/json'})
+        },{ credentials: 'include'})
+        .then(res => res.json())
+        .then(res =>{
+
+            this.props.history.push('/')
+        })
+    }
+
     render(){
 
         return(
@@ -22,6 +39,7 @@ class Navigation extends React.Component{
                     <div className="collapse navbar-collapse navHeaderCollapse">
                         <ul className="nav navbar-nav navbar-right">
                             <li ><Link to={"/guests"}>Guests</Link></li>
+                            <li ><Link to={"/statistics"}>Statistics</Link></li>
                             <li ><Link to={"/task"}>Tasks</Link></li>
                             <li ><Link to={"/register"}>Register</Link></li>
                         </ul>

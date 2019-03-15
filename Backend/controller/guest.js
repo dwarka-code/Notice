@@ -18,26 +18,21 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
 
  function truncate(string){
 
-    if (string.length > 20)
-       return string.substring(0,20)+'...';
+    if (string.length > 15)
+       return string.substring(0,15)+'...';
     else
        return string;
  }
 
  function renderGuests(req, res, next){
 
-
-    console.log("REQUEST: ",req.body.asezati)
-    //console.log("ID: ", req.body.id)
     let arrayGuests= []
     let arrayTable=[]
     let name = req.cookies.user_name
     let userid = req.cookies.user_idd
 
-    
     db.collection('table').updateOne({_id: ObjectID(req.body.id)}, { $set: {people: req.body.asezati} })
-
-
+    
     let cursor = db.collection('guests').find({userid: userid})
     let cursor1 = db.collection('table').find({userid: userid})
     cursor1.forEach(function(doc, err){
@@ -51,7 +46,6 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function(err, database){
             console.log(err)
         arrayGuests.push(doc)
     }, function(){
-
         for(let i=0;i<arrayGuests.length;i++){
 
             arrayGuests[i].name=truncate(arrayGuests[i].name)

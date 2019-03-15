@@ -20,7 +20,7 @@ class GuestsPage extends Component{
             guests: [],
             tables: [],
             asezati: [],
-            draggedGUest: {},
+            draggedGuest: '',
             search: ''
         }
     }
@@ -69,35 +69,33 @@ class GuestsPage extends Component{
     ondrop(guest, id) {
         let url = '/guests'
         const { asezati } = this.state
+        console.log("Pe cine mutam: ",guest.guest[0])
+        let initiala_nume = guest.guest[0]
         
         this.setState({
 
-            asezati: [...asezati, guest], 
+            asezati: [...asezati, guest.guest],
+            draggedGuest: initiala_nume 
         },function(){
 
-            console.log("ASEZATI: ",this.state.asezati)
             this.state.tables.map((table)=>{    
                 if(table._id === id){
-                    table.people.push(guest)             
+                    table.people.push(guest.guest)             
                     let data = {
                         asezati: table.people,
                         id: table._id,
-                        oameni: this.state.guests
+                        oameni: this.state.guests,
                     }
                     let p = parseInt(data.asezati.length)
                     let q = parseInt(table.number_of_people)             
                     if(p >= q){
                         console.log("Masa e plina, nu mai pot sa adaug")                   
-                        $(document.body).bind("dragover", function(e) {
-                            e.preventDefault();
-                            return false;
-                        });
-                        $(document.body).bind("drop", function(e){
-                            e.preventDefault();
-                            console.log("GATA BA, nu mai poti sa adaugi")
+                       
+                            //e.preventDefault();
                             toast.error("The table is full")
                             return false;
-                        });          
+                        
+    
                     }
                     else{
                         console.log("Mai poti sa adaugi oameni la masa")
@@ -139,18 +137,18 @@ class GuestsPage extends Component{
                                                 <Link to={`/guests/addtable`} style={{fontSize: 40}}><i className="fas fa-plus"></i></Link>
                                             </div>                                                         
                                                     {this.state.tables.map((table, i)=>(                                                              
-                                                               <div className="table" key = {i}>    
-                                                                                                               
-                                                                            <Circle numberTable={table.number} numberPeople = {table.number_of_people}/>  
-                                                                        
-                                                                            <ul className="circle-container">                                                             
-                                                                                {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
-                                                                                                                
-                                                                                    <li> <Patrat key={index} /></li>
-                                                                             
-                                                                                )}
-                                                                                </ul>
-                                                                            
+                                                               <div className="table" key = {i}>                                                        
+                                                                        <Circle key={i} numberTable={table.number} numberPeople = {table.number_of_people}/>    
+                                                                        <ul className="circle-container" key={table._id}>                                                             
+                                                                            {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
+                                                                                 <Droppable
+                                                                                 types={['guest']}
+                                                                                 onDrop={(e)=>this.ondrop(e, table._id)}>                           
+                                                                                    <li> <Patrat key={index} initiala_nume={this.state.draggedGuest}/></li>
+                                                                                </Droppable>
+                                                                         
+                                                                            )}
+                                                                            </ul>      
                                                                 </div>                                                                                                                                                                                 
                                                    ))}                                                                                    
                                             </Col>
@@ -178,19 +176,6 @@ class GuestsPage extends Component{
                                 </Row>
                             </div>
                             <ToastContainer removeCloseButton="true" position="bottom-center" store={toast}/>
-                            <div>
-                                <ul>
-                                    <Draggable type="fruit" data="banana"><li>Banana</li></Draggable>
-                                    <Draggable type="fruit" data="apple"><li>Apple</li></Draggable>
-                                    <Draggable type="metal" data="silver"><li>Silver</li></Draggable>
-                                </ul>
-                                <Droppable
-                                    types={['guest']} // <= allowed drop types
-                                    className="spatiu"
-                                    onDrop={this.ondrop.bind(this)}>
-                                    <ul className="Smoothie"></ul>
-                                </Droppable>
-                            </div>
                 </div>
         )
     }
