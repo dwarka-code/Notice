@@ -2,11 +2,9 @@ import React ,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import Navigation from './Navigation'
 import Circle from './Circle'
-import Patrat from './Patrat'
 import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 import {ToastContainer, toast} from 'react-toastify'
 import { Draggable, Droppable } from 'react-drag-and-drop'
-import $ from 'jquery'
 
 import '../style/GuestPage.css'
 
@@ -68,12 +66,15 @@ class GuestsPage extends Component{
 
     ondrop(guest, id) {
         let url = '/guests'
-        const { asezati } = this.state
+        const { guests, asezati } = this.state
         console.log("Pe cine mutam: ",guest.guest[0])
+        console.log("ASEZATI: ",this.state.asezati)
         let initiala_nume = guest.guest[0]
         
         this.setState({
 
+            guests: guests.filter(x =>
+            x.name !== guest.guest),
             asezati: [...asezati, guest.guest],
             draggedGuest: initiala_nume 
         },function(){
@@ -137,18 +138,19 @@ class GuestsPage extends Component{
                                                 <Link to={`/guests/addtable`} style={{fontSize: 40}}><i className="fas fa-plus"></i></Link>
                                             </div>                                                         
                                                     {this.state.tables.map((table, i)=>(                                                              
-                                                               <div className="table" key = {i}>                                                        
-                                                                        <Circle key={i} numberTable={table.number} numberPeople = {table.number_of_people}/>    
-                                                                        <ul className="circle-container" key={table._id}>                                                             
-                                                                            {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
-                                                                                 <Droppable
+                                                               <div className="table" key = {i}>
+                                                                         <Droppable
                                                                                  types={['guest']}
-                                                                                 onDrop={(e)=>this.ondrop(e, table._id)}>                           
-                                                                                    <li> <Patrat key={index} initiala_nume={this.state.draggedGuest}/></li>
-                                                                                </Droppable>
-                                                                         
-                                                                            )}
-                                                                            </ul>      
+                                                                                 onDrop={(e)=>this.ondrop(e, table._id)}>
+                                                                                    <Circle key={i} numberTable={table.number} numberPeople = {table.number_of_people}/>  
+                                                                                 </Droppable>                                                        
+
+                                                                        <ListGroup >                                                              
+                                                                            {table.people.map((guest, i)=>(
+
+                                                                                <ListGroupItem key={i}>{guest}</ListGroupItem>
+                                                                            ))}
+                                                                       </ListGroup>      
                                                                 </div>                                                                                                                                                                                 
                                                    ))}                                                                                    
                                             </Col>
@@ -175,6 +177,7 @@ class GuestsPage extends Component{
                                     </Col>
                                 </Row>
                             </div>
+                            <h1>BRANCH guestpage</h1>
                             <ToastContainer removeCloseButton="true" position="bottom-center" store={toast}/>
                 </div>
         )
