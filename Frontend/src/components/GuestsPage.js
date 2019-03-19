@@ -176,6 +176,7 @@ class GuestsPage extends Component{
                                 </Row>
                             </div>
                             <ToastContainer removeCloseButton="true" position="bottom-center" store={toast}/>
+                            <h1>AICI este masterul</h1>
                 </div>
         )
     }
