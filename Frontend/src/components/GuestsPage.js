@@ -2,11 +2,9 @@ import React ,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import Navigation from './Navigation'
 import Circle from './Circle'
-import Patrat from './Patrat'
 import {Row, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 import {ToastContainer, toast} from 'react-toastify'
 import { Draggable, Droppable } from 'react-drag-and-drop'
-import $ from 'jquery'
 
 import '../style/GuestPage.css'
 
@@ -139,16 +137,6 @@ class GuestsPage extends Component{
                                                     {this.state.tables.map((table, i)=>(                                                              
                                                                <div className="table" key = {i}>                                                        
                                                                         <Circle key={i} numberTable={table.number} numberPeople = {table.number_of_people}/>    
-                                                                        <ul className="circle-container" key={table._id}>                                                             
-                                                                            {Array.from(Array(parseInt(table.number_of_people))).map((item, index) =>
-                                                                                 <Droppable
-                                                                                 types={['guest']}
-                                                                                 onDrop={(e)=>this.ondrop(e, table._id)}>                           
-                                                                                    <li> <Patrat key={index} initiala_nume={this.state.draggedGuest}/></li>
-                                                                                </Droppable>
-                                                                         
-                                                                            )}
-                                                                            </ul>      
                                                                 </div>                                                                                                                                                                                 
                                                    ))}                                                                                    
                                             </Col>
@@ -176,7 +164,6 @@ class GuestsPage extends Component{
                                 </Row>
                             </div>
                             <ToastContainer removeCloseButton="true" position="bottom-center" store={toast}/>
-                            <h1>AICI este masterul</h1>
                 </div>
         )
     }

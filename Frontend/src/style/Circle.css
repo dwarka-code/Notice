@@ -1,13 +1,16 @@
-.numberCircle {
-
-    width: 230px;
-    line-height: 230px;
+.circle {
+    background: gray;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    text-align: center;
-    font-size: 60px;
-    background-color: gray;
-    border: 2px solid #666;
-    display: inline-block;
-    margin-top: 30px;
-    margin-left: 125px;
-}
+    margin: 50px auto 70px;
+    position: relative;
+    /* top: 200px; left: 200px; for example purposes only */
+  }
+  
+  .circle-hold {
+    position: absolute;
+    left: 90px; /* calculate circle width / 2 - .square width / 2 */
+    top: 90px; /* calculate circle height / 2 - .square height / 2 */
+    /* transform: translate(-40%, -50%); */
+  }
