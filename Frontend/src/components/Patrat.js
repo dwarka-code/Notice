@@ -6,6 +6,7 @@ class Patrat extends React.Component{
 
     render(){
         const css = this.props.css;
+        css.radius = Number('135');
 
         return(
 

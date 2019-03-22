@@ -4,13 +4,14 @@
     height: 200px;
     border-radius: 50%;
     margin: 50px auto 70px;
+    margin-bottom: 7em;
     position: relative;
     /* top: 200px; left: 200px; for example purposes only */
   }
   
   .circle-hold {
     position: absolute;
-    left: 90px; /* calculate circle width / 2 - .square width / 2 */
-    top: 90px; /* calculate circle height / 2 - .square height / 2 */
+    left: 84px; /* calculate circle width / 2 - .square width / 2 */
+    top: 84px; /* calculate circle height / 2 - .square height / 2 */
     /* transform: translate(-40%, -50%); */
   }

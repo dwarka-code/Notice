@@ -21,28 +21,8 @@
   background-color: green;
 }
 
-
-/*
-.guest{
-
-  cursor: pointer;
-  transition: 1s;
-}
-
-.guest:hover{
-
-  transform: rotate(360deg);
-}
-
 .table{
 
-  background-color:#F0F0F0;
-  transition: 2s;
+  width: 49%;
+  display: inline-block;
 }
-
-.table:hover{
-
-  background-color: grey;
-
-}
-*/
