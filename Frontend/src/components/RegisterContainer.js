@@ -34,11 +34,11 @@ class RegisterContainer extends React.Component{
         })
         .then(res => res.json())
         .then(data => {
-            if(data.email === ''){
+            if(data.status_user === false){
 
                 this.setState({
 
-                    message: 'User already exists!'
+                    message: 'User already exist!'
                 })
             }
             else{

@@ -20,7 +20,6 @@ class LoginContainer extends React.Component{
             email: '',
             password: '',
             message: '',
-            value: '',
             isLogIn: false,
             name: '',
         }
@@ -46,10 +45,13 @@ class LoginContainer extends React.Component{
 
                     email: user.email,
                     password: user.password,
-                })
-                if(user.email === ''){
+                },function(){
 
-                    this.setState({message: "Email or password is wrong"})
+                    console.log("State: ",this.state)
+                })
+                if(user.user_status === false){
+
+                    this.setState({message: user.message})
                     //toast.error("Email or password is wrong")
                 }
                 else{
@@ -67,20 +69,8 @@ class LoginContainer extends React.Component{
         this.setState({
 
             [name]: value,
-            value: e.target.value
         })
     }
-
-      getValidationState() {
-        const length = this.state.value.length;
-        if (length > 10)
-            return 'success';
-        else if (length > 5)
-            return 'warning';
-        else if (length > 0)
-            return 'error';
-        return null;
-      }
 
     responseFacebook = response =>{
 
@@ -142,7 +132,7 @@ class LoginContainer extends React.Component{
                                             type="email"
                                             name="email"
                                             autoComplete="email"
-                                            value={this.state.email}
+                                            value={this.state.email || ''}
                                             placeholder="Email"
                                             onChange={this.handleEvent}
                                         />
@@ -164,7 +154,7 @@ class LoginContainer extends React.Component{
                                                 type="password"
                                                 name="password"
                                                 autoComplete="current-password"
-                                                value={this.state.password}
+                                                value={this.state.password || ''}
                                                 placeholder="Password"
                                                 onChange={this.handleEvent}
                                             />
